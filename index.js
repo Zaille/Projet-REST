@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 /* Database configuration */
-const database = require('./app/config/dbconfig');
+const database =                                                                                                                                                                                                                                                                                                                                                                                                                                                        require('./app/config/dbconfig');
 
 /* Init database */
 database.init();
