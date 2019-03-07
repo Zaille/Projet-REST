@@ -9,32 +9,35 @@ const carController = new VilleController();
 /**
  * Villes Entity routes
  */
-router.get('/count', function (req, res) {
-    carController.countAll(res);
+
+// Recherche par ville
+router.get('/:villeId', function (req, res) {
+    carController.getVille(req, res);
 });
 
-router.get('/exists/:id', function (req, res) {
-    carController.exists(req, res);
+// Recherche par département
+router.get('/:departementId', function (req, res) {
+    carController.getDepartement(req, res);
 });
 
-router.get('/:id', function (req, res) {
-    carController.findById(req, res);
+// Recherche une activité dans la ville
+router.get('/:villeId/:activiyId', function (req, res) {
+    carController.getActivityByVille(req, res);
 });
 
-router.get('/', function (req, res) {
-    carController.findAll(res);
+// Recherche une activité dans le département
+router.get('/:departementId/:activiyId', function (req, res) {
+    carController.getAcivityByDepartement(req, res);
 });
 
-router.put('/:id', function (req, res) {
-    carController.update(req, res);
+// Recherche d'equipements par ville
+router.get('/:villeId/:stuffId', function (req, res) {
+    carController.getVille(req, res);
 });
 
-router.post('/create', function (req, res) {
-    carController.create(req, res);
-});
-
-router.delete('/:id', function (req, res) {
-    carController.deleteById(req, res);
+// Recherche par département
+router.get('/:departementId/:stuffId', function (req, res) {
+    carController.getDepartement(req, res);
 });
 
 module.exports = router;
