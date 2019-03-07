@@ -5,12 +5,12 @@ const CarDao = require('../dao/carDao');
 const ControllerCommon = require('./common/controllerCommon');
 
 /* Load Car entity */
-const Car = require('../model/car');
+const Ville = require('../model/ville');
 
 /**
  * Car Controller
  */
-class CarController {
+class VilleController {
 
     constructor() {
         this.carDao = new CarDao();
@@ -124,4 +124,4 @@ class CarController {
     };
 }
 
-module.exports = CarController;
+module.exports = VilleController;

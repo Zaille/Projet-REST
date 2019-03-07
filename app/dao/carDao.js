@@ -1,5 +1,5 @@
 /* Load Car entity */
-const Car = require('../model/car');
+const Ville = require('../model/ville');
 
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');

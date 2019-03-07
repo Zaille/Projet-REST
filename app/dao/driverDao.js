@@ -1,5 +1,5 @@
 /* Load Driver entity */
-const Driver = require('../model/driver');
+const Activity = require('../model/activity');
 
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');

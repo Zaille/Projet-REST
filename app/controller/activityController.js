@@ -5,12 +5,12 @@ const DriverDao = require('../dao/driverDao');
 const controllerCommon = require('./common/controllerCommon');
 
 /* Load Driver entity */
-const Driver = require('../model/driver');
+const Activity = require('../model/activity');
 
 /**
  * Driver Controller
  */
-class DriverController {
+class ActivityController {
 
     constructor() {
         this.driverDao = new DriverDao();
@@ -119,4 +119,4 @@ class DriverController {
     };
 }
 
-module.exports = DriverController;
+module.exports = ActivityController;

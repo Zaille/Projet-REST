@@ -2,7 +2,7 @@
  * Driver Entity (ES6 Class)
  */
 
-class Driver {
+class Activity {
     constructor(id, firstName, lastName, car) {
         this.id = id;
         this.firstName = firstName;

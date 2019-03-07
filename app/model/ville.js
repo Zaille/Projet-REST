@@ -1,8 +1,8 @@
 /**
- * Car Entity (ES6 Class)
+ * Ville Entity (ES6 Class)
  */
 
-class Car {
+class Ville {
     constructor(id, maker, model, year, driver) {
         this.id = id;
         this.maker = maker;

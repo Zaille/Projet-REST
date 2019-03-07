@@ -3,38 +3,38 @@ const express = require('express');
 const router = express.Router();
 
 /* Load controller */
-const DriverController = require('../../controller/driverController');
-const driverController = new DriverController();
+const VilleController = require('../../controller/villeController');
+const carController = new VilleController();
 
 /**
- * Driver Entity routes
+ * Villes Entity routes
  */
 router.get('/count', function (req, res) {
-    driverController.countAll(res);
+    carController.countAll(res);
 });
 
 router.get('/exists/:id', function (req, res) {
-    driverController.exists(req, res);
+    carController.exists(req, res);
 });
 
 router.get('/:id', function (req, res) {
-    driverController.findById(req, res)
+    carController.findById(req, res);
 });
 
 router.get('/', function (req, res) {
-    driverController.findAll(res);
+    carController.findAll(res);
 });
 
 router.put('/:id', function (req, res) {
-    driverController.update(req, res)
+    carController.update(req, res);
 });
 
 router.post('/create', function (req, res) {
-    driverController.create(req, res);
+    carController.create(req, res);
 });
 
 router.delete('/:id', function (req, res) {
-    driverController.deleteById(req, res)
+    carController.deleteById(req, res);
 });
 
 module.exports = router;
