@@ -11,4 +11,4 @@ class Activity {
     }
 }
 
-module.exports = Driver;
+module.exports = Activity;
