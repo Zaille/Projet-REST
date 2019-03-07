@@ -7,5 +7,5 @@ const router = express.Router();
 /* API routes */
 router.use('/car', require('./api/carRoutes'));
 router.use('/driver', require('./api/driverRoutes'));
-oddqzdqzdqzdqozduqzouqzoruzqroqruoqusodqulesfse.fsefsdfse;
+
 module.exports = router;
