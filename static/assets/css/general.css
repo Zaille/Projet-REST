@@ -1,0 +1,56 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+#headerText{
+    width: 100%;
+    height: 100px;
+    background-color: darkslategrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #5e8ea5;
+}
+#menuBox{
+    width: 100%;
+    height: 50px;
+    background-color: #668b4d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#lieuxBox{
+    width: 100%;
+    height: 70px;
+    background-color: darkcyan;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#activitesBox{
+    width: 100%;
+    height: 50px;
+    background-color: antiquewhite;
+}
+
+.btMenu{
+    background-color: rgba(131, 0, 6, 0.29);
+    height: 100%;
+    width: 200px;
+    border:none;
+    margin: 10px;
+}
+
+.btMenu:hover{
+    background-color: rgba(131, 0, 6, 0.50);
+}
+
+select{
+    width: 170px;
+    height: 30px;
+    margin: 10px;
+    background-color: antiquewhite;
+    border: none;
+}
