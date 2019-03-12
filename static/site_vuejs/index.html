@@ -2,20 +2,21 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
     <link rel="stylesheet" href="../assets/css/general.css">
     <title>Activity chooser</title>
 </head>
 <body>
 <!--<div id="test"> {{message}}</div>-->
-<div id="headerText"><h2>Bienvenue sur l'activity Chooser</h2> </br>
-    Que voulez-vous <faire></faire>?</div>
+<div id="headerText"><h2>Bienvenue sur Activity Chooser</h2> </br>
+    Que voulez-vous faire ?</div>
 <div id="menuBox">
-    <button class="btMenu">Rechercher par département</button>
-    <button class="btMenu">Rechercher par ville</button>
+    <button id="rechercheDepartementBT" class="btMenu">Rechercher par lieu</button>
+    <button id="rechercheActiviteBT" class="btMenu">Rechercher par activité</button>
 </div>
-<div id="lieuxBox">
-
+<div id="lieuxBox" style="display: none">
     <select>
         <option>dep</option>
         <option>dep</option>
@@ -31,13 +32,41 @@
         <option>ville</option>
     </select>
 </div>
-<div id="activitesBox">
-    <div id="listActivityBox"></div>
-    <div id="activityDetailsBox"></div>
-
+<div id="activitesBox" >
+    <div id="leftContainer" class="bothContainers" style="display: none">
+        <div class="txtActivity"> Liste des  activités</div>
+        <div class="scrollers" style="overflow:scroll; ">
+            <ul id="leftList" style="list-style-type: none;">
+            </ul>
+        </div>
+    </div>
+    <div id="rightContainer" class="bothContainers" style="display: none">
+        <div class="txtActivity">  Détails de l'activité</div>
+        <div class="scrollers" style="overflow:scroll;">
+            <ul id="rightList" style="list-style-type: none;"></ul>
+            <div id="googleMap"  style="width:100%;height:300px; display: none" ></div>
+        </div>
+    </div>
 </div>
 
+
+<script>
+    function myMap() {
+        var mapProp= {
+            center:new google.maps.LatLng(51.508742,-0.120850),
+            zoom:8,
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        var marker = new google.maps.Marker({position: new google.maps.LatLng(51.508742,-0.120850)});
+        marker.setMap(map);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFQbHPcS8dVeLSB2Hjp3FAQ5ET61z85yg&callback=myMap"></script>
 <script src="../assets/JavaScript/indexVue.js"></script>
+
+
+
+
 </body>
 </html>
 
