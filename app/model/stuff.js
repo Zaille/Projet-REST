@@ -1,11 +1,11 @@
 /**
- * Ville Entity
+ * Stuff Entity
  */
 
-class Ville {
+class Stuff {
     constructor() {
         // TODO
     }
 }
 
-module.exports = Ville;
+module.exports = Stuff;
