@@ -15,6 +15,7 @@ class readerCsv {
             .on('end', () => {
                 results.forEach(function (element) {
                     let string = JSON.stringify(element);
+                    console.log(element.);
                     matrice[0].push(string.replace(/{"Code du département":"(\d{2})".*/, '$1')); // Code du département
                     matrice[1].push(string.replace(/.*,"Libellé du département":"(.*)","Code INSEE.*/, '$1')); // Libellé du département
                     matrice[2].push(string.replace(/.*,"Code INSEE":"(\d{5})".*/, '$1')); // Code INSEE

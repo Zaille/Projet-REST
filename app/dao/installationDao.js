@@ -1,5 +1,5 @@
 /* Load Car entity */
-const Ville = require('../model/ville');
+//const Ville = require('../model/ville');
 
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');
@@ -7,7 +7,7 @@ const daoCommon = require('./commons/daoCommon');
 /**
  * Car Data Access Object
  */
-class CarDao {
+class InstallationDao {
 
     constructor() {
         this.common = new daoCommon();
@@ -89,45 +89,7 @@ class CarDao {
         return this.common.run(sqlRequest, sqlParams);
     };
 
-    /**
-     * Creates the given entity with a provided id in the database
-     * @params Car
-     * returns database insertion status
-     */
-    createWithId(Car) {
-        let sqlRequest = "INSERT into car (id, maker, model, year, driver) " +
-            "VALUES ($id, $maker, $model, $year, $driver)";
-        let sqlParams = {
-            $id: Car.id,
-            $maker: Car.maker,
-            $model: Car.model,
-            $year: Car.year,
-            $driver: Car.driver
-        };
-        return this.common.run(sqlRequest, sqlParams);
-    };
 
-    /**
-     * Deletes an entity using its Id / Primary Key
-     * @params id
-     * returns database deletion status
-     */
-    deleteById(id) {
-        let sqlRequest = "DELETE FROM car WHERE id=$id";
-        let sqlParams = {$id: id};
-        return this.common.run(sqlRequest, sqlParams);
-    };
-
-    /**
-     * Returns true if an entity exists with the given Id / Primary Key
-     * @params id
-     * returns database entry existence status (true/false)
-     */
-    exists(id) {
-        let sqlRequest = "SELECT (count(*) > 0) as found FROM car WHERE id=$id";
-        let sqlParams = {$id: id};
-        return this.common.run(sqlRequest, sqlParams);
-    };
 }
 
 module.exports = CarDao;
