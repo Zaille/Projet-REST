@@ -5,3 +5,9 @@
 *.xml
 .idea
 
+package-lock.json
+node_modules/yallist/yallist.js
+node_modules/yallist/LICENSE
+node_modules/wrappy/README.md
+
+node_modules/*
