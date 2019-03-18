@@ -82,43 +82,43 @@ class readerCsv {
                     matrice[1].push(string.replace(/.*"Departement":"(.*)","Code INSEE.*/, '$1')); // Departement
                     matrice[2].push(string.replace(/.*"Code INSEE":"(\d{5})".*/, '$1')); // Code INSEE
                     matrice[3].push(string.replace(/.*"Commune":"(.*)","Numéro de l'installation.*/, '$1')); // Commune
-                    matrice[4].push(string.replace(/.*"Numéro de l'installation":"(\d{9})".*/, '$1')); // Numéro de l'installation
+                    matrice[4].push(string.replace(/.*"Numéro de l'installation":"(\d{9})".*/, '$1')); // Numéro de l'installation --
                     matrice[5].push(string.replace(/.*"Nom usuel de l'installation":"(.*)","Numéro de la fiche équipement.*/, '$1')); // Nom usuel de l'installation
-                    matrice[6].push(string.replace(/.*"Numéro de la fiche équipement":"(\d*)".*/, '$1')); // Numéro de la fiche équipement
-                    matrice[7].push(string.replace(/.*"Equipement":"(.*)","Batiment.*/, '$1')); // Numéro de la fiche équipement
-                    matrice[8].push(string.replace(/.*"Batiment":"(.*)","Nombre d'équipements identiques.*/, '$1')); // Batiment
+                    matrice[6].push(string.replace(/.*"Numéro de la fiche équipement":"(\d*)".*/, '$1')); // Numéro de la fiche équipement --
+                    matrice[7].push(string.replace(/.*"Equipement":"(.*)","Batiment.*/, '$1')); // Équipement --
+                    matrice[8].push(string.replace(/.*"Batiment":"(.*)","Nombre d'équipements identiques.*/, '$1')); // Batiment --
                     matrice[9].push(string.replace(/.*"Type d'équipement_Code":"(\d*)".*/, '$1')); // Type d'équipement_Code
-                    matrice[10].push(string.replace(/.*"Type d'équipement":"(.*)","Propriétaire principal.*/, '$1')); // Type d'équipement
-                    matrice[11].push(string.replace(/.*"Propriétaire principal":"(.*)","Gestionnaire principal.*/, '$1')); // Propriétaire principal
-                    matrice[12].push(string.replace(/.*"Gestionnaire principal":"(.*)","Propriétaire secondaire.*/, '$1')); // Gestionnaire principal
-                    matrice[13].push(string.replace(/.*"Présence d'un éclairage":"(Oui|Non)".*/, '$1')); // Présence d'un éclairage
-                    matrice[14].push(string.replace(/.*"Salle polyvalente":"(Oui|Non)".*/, '$1')); // Salle polyvalente
-                    matrice[15].push(string.replace(/.*"Etablissement de plein air":"(Oui|Non)".*/, '$1')); // Etablissement de plein air
-                    matrice[16].push(string.replace(/.*"Etablissement sportif couvert":"(Oui|Non)".*/, '$1')); // Etablissement sportif couvert
+                    matrice[10].push(string.replace(/.*"Type d'équipement":"(.*)","Propriétaire principal.*/, '$1')); // Type d'équipement --
+                    matrice[11].push(string.replace(/.*"Propriétaire principal":"(.*)","Gestionnaire principal.*/, '$1')); // Propriétaire principal --
+                    matrice[12].push(string.replace(/.*"Gestionnaire principal":"(.*)","Propriétaire secondaire.*/, '$1')); // Gestionnaire principal --
+                    matrice[13].push(string.replace(/.*"Présence d'un éclairage":"(Oui|Non)".*/, '$1')); // Présence d'un éclairage --
+                    matrice[14].push(string.replace(/.*"Salle polyvalente":"(Oui|Non)".*/, '$1')); // Salle polyvalente --
+                    matrice[15].push(string.replace(/.*"Etablissement de plein air":"(Oui|Non)".*/, '$1')); // Etablissement de plein air --
+                    matrice[16].push(string.replace(/.*"Etablissement sportif couvert":"(Oui|Non)".*/, '$1')); // Etablissement sportif couvert --
                     matrice[17].push(string.replace(/.*"Catégorie établissement recevant du public de 1 à 5":"(.*)","Année de mise en service.*/, '$1')); // Catégorie établissement recevant du public de 1 à 5
-                    matrice[18].push(string.replace(/.*"Nombre de place en tribune":"(.*)","Libellé de la nature du sol.*/, '$1')); // Nombre de place en tribune
-                    matrice[19].push(string.replace(/.*"Libellé de la nature du sol":"(.*)","Libellé de la nature de l'équi.*/, '$1')); // Libellé de la nature du sol
-                    matrice[20].push(string.replace(/.*"Aire d'évolution Longueur":"(.*)","Aire d'évolution Largeur.*/, '$1')); // Aire d'évolution Longueur
-                    matrice[21].push(string.replace(/.*"Aire d'évolution Largeur":"(.*)","Aire d'évolution Surface.*/, '$1')); // Aire d'évolution Largeur
-                    matrice[22].push(string.replace(/.*Nombre de couloir \/ piste \/ poste \/ etc.":"(.*)","Nombre de vestiaire sportif.*/, '$1')); // Nombre de couloir / piste / poste / etc.
-                    matrice[23].push(string.replace(/.*"Nombre de vestiaire sportif":"(\d*)".*/, '$1')); // Nombre de vestiaire sportif
-                    matrice[24].push(string.replace(/.*"Sono fixe":"(Oui|Non)".*/, '$1')); // Sono fixe
-                    matrice[25].push(string.replace(/.*"Tableau fixe":"(Oui|Non)".*/, '$1')); // Tableau fixe
-                    matrice[26].push(string.replace(/.*"Chronométrage":"(Oui|Non)".*/, '$1')); // Chronométrage
+                    matrice[18].push(string.replace(/.*"Nombre de place en tribune":"(.*)","Libellé de la nature du sol.*/, '$1')); // Nombre de place en tribune --
+                    matrice[19].push(string.replace(/.*"Libellé de la nature du sol":"(.*)","Libellé de la nature de l'équi.*/, '$1')); // Libellé de la nature du sol --
+                    matrice[20].push(string.replace(/.*"Aire d'évolution Longueur":"(.*)","Aire d'évolution Largeur.*/, '$1')); // Aire d'évolution Longueur --
+                    matrice[21].push(string.replace(/.*"Aire d'évolution Largeur":"(.*)","Aire d'évolution Surface.*/, '$1')); // Aire d'évolution Largeur --
+                    matrice[22].push(string.replace(/.*Nombre de couloir \/ piste \/ poste \/ etc.":"(.*)","Nombre de vestiaire sportif.*/, '$1')); // Nombre de couloir / piste / poste / etc. --
+                    matrice[23].push(string.replace(/.*"Nombre de vestiaire sportif":"(\d*)".*/, '$1')); // Nombre de vestiaire sportif --
+                    matrice[24].push(string.replace(/.*"Sono fixe":"(Oui|Non)".*/, '$1')); // Sono fixe --
+                    matrice[25].push(string.replace(/.*"Tableau fixe":"(Oui|Non)".*/, '$1')); // Tableau fixe --
+                    matrice[26].push(string.replace(/.*"Chronométrage":"(Oui|Non)".*/, '$1')); // Chronométrage --
                     matrice[27].push(string.replace(/.*"localisation":"(.*)"}/, '$1')); // Localisation
-                    matrice[28].push(string.replace(/.*"Accès handicapé mobilité Aire d'évolution":"(.*)","Accès handicapé mobilité Tribune.*/, '$1')); // Accès handicapé mobilité Aire d'évolution
-                    matrice[29].push(string.replace(/.*"Accès handicapé mobilité Tribune":"(.*)","Accès handicapé mobilité Vestiaire.*/, '$1')); // Accès handicapé mobilité Tribune
-                    matrice[30].push(string.replace(/.*"Accès handicapé mobilité Vestiaire":"(.*)","Accès handicapé mobilité sanitaire sportif.*/, '$1')); // Accès handicapé mobilité Vestiaire
-                    matrice[31].push(string.replace(/.*"Accès handicapé mobilité sanitaire sportif":"(.*)","Accès handicapé mobilité sanitaire public.*/, '$1')); // Accès handicapé mobilité sanitaire sportif
+                    matrice[28].push(string.replace(/.*"Accès handicapé mobilité Aire d'évolution":"(.*)","Accès handicapé mobilité Tribune.*/, '$1')); // Accès handicapé mobilité Aire d'évolution --
+                    matrice[29].push(string.replace(/.*"Accès handicapé mobilité Tribune":"(.*)","Accès handicapé mobilité Vestiaire.*/, '$1')); // Accès handicapé mobilité Tribune --
+                    matrice[30].push(string.replace(/.*"Accès handicapé mobilité Vestiaire":"(.*)","Accès handicapé mobilité sanitaire sportif.*/, '$1')); // Accès handicapé mobilité Vestiaire --
+                    matrice[31].push(string.replace(/.*"Accès handicapé mobilité sanitaire sportif":"(.*)","Accès handicapé mobilité sanitaire public.*/, '$1')); // Accès handicapé mobilité sanitaire sportif --
                     matrice[32].push(string.replace(/.*"Accès handicapé mobilité Aucun":"(.*)","Accès handicapé sensoriel Aucun.*/, '$1')); // Accès handicapé mobilité Aucun
-                    matrice[33].push(string.replace(/.*"Accueil club":"(Oui|Non)".*/, '$1')); // Accueil club
-                    matrice[34].push(string.replace(/.*"Accueil salle de réunion":"(Oui|Non)".*/, '$1')); // Accueil salle de réunion
-                    matrice[35].push(string.replace(/.*"Accueil buvette":"(Oui|Non)".*/, '$1')); // Accueil buvette
-                    matrice[36].push(string.replace(/.*"Accueil infirmerie":"(Oui|Non)".*/, '$1')); // Accueil buvette
+                    matrice[33].push(string.replace(/.*"Accueil club":"(Oui|Non)".*/, '$1')); // Accueil club --
+                    matrice[34].push(string.replace(/.*"Accueil salle de réunion":"(Oui|Non)".*/, '$1')); // Accueil salle de réunion --
+                    matrice[35].push(string.replace(/.*"Accueil buvette":"(Oui|Non)".*/, '$1')); // Accueil buvette --
+                    matrice[36].push(string.replace(/.*"Accueil infirmerie":"(Oui|Non)".*/, '$1')); // Accueil buvette --
                     matrice[37].push(string.replace(/.*"Accueil bureau":"(Oui|Non)".*/, '$1')); // Accueil bureau
-                    matrice[38].push(string.replace(/.*"Accueil réception":"(Oui|Non)".*/, '$1')); // Accueil réception
-                    matrice[39].push(string.replace(/.*"Accueil local rangement":"(Oui|Non)".*/, '$1')); // Accueil local rangement
-                    matrice[40].push(string.replace(/.*"Nombre de couloirs pour les structures artificielles d'escalade":"(\d*)".*/, '$1')); // Nombre de couloirs pour les structures artificielles d'escalade
+                    matrice[38].push(string.replace(/.*"Accueil réception":"(Oui|Non)".*/, '$1')); // Accueil réception --
+                    matrice[39].push(string.replace(/.*"Accueil local rangement":"(Oui|Non)".*/, '$1')); // Accueil local rangement --
+                    matrice[40].push(string.replace(/.*"Nombre de couloirs pour les structures artificielles d'escalade":"(\d*)".*/, '$1')); // Nombre de couloirs pour les structures artificielles d'escalade --
                     matrice[41].push(string.replace(/.*"Hauteur pour les structures artificielles d'escalade":"(.*)","Surface pour les structures artific.*/, '$1')); // Hauteur pour les structures artificielles d'escalade
                     matrice[42].push(string.replace(/.*"Surface pour les structures artificielles d'escalade":"(.*)","Présence d'une signa.*/, '$1')); // Surface pour les structures artificielles d'escalade
                     matrice[43].push(string.replace(/.*"Site escalade Nombre de voies":"(\d*)","Classe fédérale mi.*/, '$1')); // Site escalade Nombre de voies

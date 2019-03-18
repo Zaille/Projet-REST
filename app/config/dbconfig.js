@@ -19,7 +19,7 @@ let init = function () {
         "NomDepartement TEXT" +
         "NomCommune TEXT" +
         "Adresse TEXT" +
-        "LocX  DECIMAL(9,6)" +
+        "LocX DECIMAL(9,6)" +
         "LocY DECIMAL(9,6)" +
         "DesserteBus BOOLEAN"+
         "DesserteTrain BOOLEAN"+
@@ -32,7 +32,7 @@ let init = function () {
 
     db.run("CREATE TABLE if not exists equipement (" +
         "Numequipement INTEGER PRIMARY KEY AUTOINCREMENT," +
-        "equipement TEXT," +
+        "Equipement TEXT," +
         "NumInstallation TEXT," +
         "Typeequipement TEXT" +
         "Proprietaire TEXT" +
@@ -42,7 +42,7 @@ let init = function () {
         "EtabPleinAir BOOLEAN" +
         "EtabSportifCouvert BOOLEAN" +
         "NbplaceTribune INT" +
-        "typedusol TEXT"+
+        "Typedusol TEXT"+
         "AireEvolLongueur INT" +
         "AireEvolLargeur INT" +
         "NbCouloir INT" +
@@ -50,17 +50,12 @@ let init = function () {
         "SonoFixe BOOLEAN" +
         "TableauFixe BOOLEAN" +
         "Chronometrage BOOLEAN" +
-        "SanitairePublic BOOLEAN" +
+        "SanitairePublic BOOLEAN" + //
         "AcHandMobiAireEvol BOOLEAN" +
         "AcHandMobiTribune BOOLEAN" +
         "AcHandMobiVestiaire BOOLEAN" +
         "AcHandMobiSanitairePublic BOOLEAN" +
         "AcHandMobiSanitaireSportif BOOLEAN" +
-        "AcHandSensoAireEvol BOOLEAN" +
-        "AcHandSensoTribune BOOLEAN" +
-        "AcHandSensoVestiaire BOOLEAN" +
-        "AcHandSensoSanitairePublic BOOLEAN" +
-        "AcHandSensoSanitaireSportif BOOLEAN" +
         "AccueilClub BOOLEAN" +
         "AccueilSalledeReunion BOOLEAN" +
         "AccueilBuvette BOOLEAN" +
