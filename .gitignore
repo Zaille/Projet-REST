@@ -11,3 +11,5 @@ node_modules/yallist/LICENSE
 node_modules/wrappy/README.md
 
 node_modules/*
+data/.~lock.234400034_004-009_activites-des-fiches-equipements-rpdl.csv#
+*.csv#
