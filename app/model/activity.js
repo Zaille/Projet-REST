@@ -1,13 +1,10 @@
 /**
- * Driver Entity (ES6 Class)
+ * Driver Entity
  */
 
 class Activity {
-    constructor(id, firstName, lastName, car) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.car = car;
+    constructor( ) {
+        // TODO
     }
 }
 

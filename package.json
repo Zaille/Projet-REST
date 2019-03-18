@@ -6,6 +6,8 @@
   "dependencies": {
     "bluebird": "*",
     "body-parser": "*",
+    "csv-parse": "latest",
+    "csv-parser": "^2.2.0",
     "ejs": "*",
     "express": "*",
     "request": "^2.88.0",

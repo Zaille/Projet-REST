@@ -3,38 +3,21 @@ const express = require('express');
 const router = express.Router();
 
 /* Load controller */
-const DriverController = require('../../controller/activityController');
-const driverController = new DriverController();
+const ActivityController = require('../../controller/activityController');
+const activityController = new ActivityController();
 
 /**
- * Driver Entity routes
+ * Activity Entity routes
  */
-router.get('/count', function (req, res) {
-    driverController.countAll(res);
+
+// Recherche par activité
+router.get('/:activityId', function (req, res) {
+    activityController.countAll(res);
 });
 
-router.get('/exists/:id', function (req, res) {
-    driverController.exists(req, res);
-});
-
-router.get('/:id', function (req, res) {
-    driverController.findById(req, res)
-});
-
-router.get('/', function (req, res) {
-    driverController.findAll(res);
-});
-
-router.put('/:id', function (req, res) {
-    driverController.update(req, res)
-});
-
-router.post('/create', function (req, res) {
-    driverController.create(req, res);
-});
-
-router.delete('/:id', function (req, res) {
-    driverController.deleteById(req, res)
+// Recherche d'un nombre d'équipements par activité
+router.get('/:activityId/:StuffId', function (req, res) {
+    activityController.countAll(res);
 });
 
 module.exports = router;
