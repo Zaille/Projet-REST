@@ -1,6 +1,3 @@
-/* Load Driver Data Access Object */
-const DriverDao = require('../dao/driverDao');
-
 /* Load Controller Common function */
 const controllerCommon = require('./common/controllerCommon');
 
@@ -13,7 +10,6 @@ const Activity = require('../model/activity');
 class ActivityController {
 
     constructor() {
-        this.driverDao = new DriverDao();
         this.common = new controllerCommon();
     }
 

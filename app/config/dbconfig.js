@@ -1,5 +1,6 @@
 /* Load modules */
 let sqlite3 = require('sqlite3').verbose();
+let csv = require( './readerCsv');
 
 /*
  * Database configuration
@@ -11,7 +12,9 @@ let db = new sqlite3.Database('./sqlite.db');
 /* Init car and driver tables if they don't exist */
 let init = function () {
 
-    db.run("CREATE TABLE if not exists installations (" +
+    let promesses = [];
+
+    promesses.push( db.run("CREATE TABLE if not exists installations (" +
         "NumInstallation INTEGER PRIMARY KEY," +
         "NomInstallation TEXT," +
         "CodeINSEE INT," +
@@ -29,9 +32,11 @@ let init = function () {
         "AccessibleHandicapés  BOOLEAN," +
         "NbplaceParking  INT," +
         "NbplaceParkingHandicapés  INT" +
-        ")");
+        ")" )
+    );
 
-    db.run("CREATE TABLE if not exists equipement (" +
+
+    promesses.push( db.run("CREATE TABLE if not exists equipement (" +
         "Numequipement INTEGER PRIMARY KEY," +
         "Equipement TEXT," +
         "NumInstallation TEXT," +
@@ -83,15 +88,23 @@ let init = function () {
         "Profondeurmini DECIMAL(9,6),"+
         "Profondeurmaxi DECIMAL(9,6),"+
         "Nbtotaltremplins INT"+
-        ")");
+        ")" )
+    );
 
-    db.run("CREATE TABLE if not exists activites (" +
+    promesses.push( db.run("CREATE TABLE if not exists activites (" +
         "Activitecode INTEGER, " +
         "Activitelibelle TEXT," +
         "Numerodelaficheequipement INTEGER," +
         "Niveaudelactivite TEXT," +
         "PRIMARY KEY (Numerodelaficheequipement,Activitecode)"+
-        ")");
+        ")" )
+    );
+
+    Promise.all(promesses).then(function () {
+        csv.getActivityData(db);
+        // csv.getInstallationData(db);
+        // csv.getStuffData(db);
+    })
 
 };
 

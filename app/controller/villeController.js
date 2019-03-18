@@ -1,6 +1,3 @@
-/* Load Car Data Access Object */
-const CarDao = require('../dao/carDao');
-
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');
 
@@ -13,7 +10,6 @@ const Ville = require('../model/ville');
 class VilleController {
 
     constructor() {
-        this.carDao = new CarDao();
         this.common = new ControllerCommon();
     }
 

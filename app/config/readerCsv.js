@@ -3,7 +3,7 @@ const csv = require('csv-parser');
 
 class readerCsv {
 
-    getActivityData(){
+    static getActivityData( db ){
 
         let results = [];
         let matrice = [];
@@ -15,7 +15,6 @@ class readerCsv {
             .on('end', () => {
                 results.forEach(function (element) {
                     let string = JSON.stringify(element);
-                    console.log(element.);
                     matrice[0].push(string.replace(/{"Code du département":"(\d{2})".*/, '$1')); // Code du département
                     matrice[1].push(string.replace(/.*,"Libellé du département":"(.*)","Code INSEE.*/, '$1')); // Libellé du département
                     matrice[2].push(string.replace(/.*,"Code INSEE":"(\d{5})".*/, '$1')); // Code INSEE
@@ -31,44 +30,43 @@ class readerCsv {
 
     };
 
-    getInstallationData(){
+    static getInstallationData( db ){
 
         let results = [];
-        let matrice = [];
-        for( let i = 0; i < 18; i++ ){ matrice[i] = []; }
 
         fs.createReadStream('/home/ioan/Bureau/Tech. Prod. Log./Projet-REST-master/data/234400034_004-010_fiches-installations-rpdl.csv')
             .pipe(csv({separator: ';'}))
             .on('data', (data) => results.push(data))
             .on('end', () => {
                 results.forEach(function (element) {
-                    let string = JSON.stringify(element);
-                    matrice[0].push(string.replace(/{"Code du département":"(\d{2})".*/, '$1')); // Code du département
-                    matrice[1].push(string.replace(/.*"Département":"(.*)","Code INSEE.*/, '$1')); // Département
-                    matrice[2].push(string.replace(/.*"Code INSEE":"(\d{5})",.*/, '$1')); // Code INSEE
-                    matrice[3].push(string.replace(/.*"Nom de la commune":"(.*)","Numéro de l'installation.*/, '$1')); // Nom de la commune
-                    matrice[4].push(string.replace(/.*"Numéro de l'installation":"(\d{9})",.*/, '$1')); // Numéro de l'installation
-                    matrice[5].push(string.replace(/.*"Nom usuel de l'installation":"(.*)","Numero de la voie.*/, '$1')); // Nom usuel de l'installation
-                    matrice[6].push(string.replace(/.*"Code postal":"(\d{5})",.*/, '$1')); // Code postal
-                    matrice[7].push(string.replace(/.*localisation":"(.*)"}/, '$1')); // Localisation
-                    matrice[8].push(string.replace(/.*"Desserte bus":"(Oui|Non)",.*/, '$1')); // Desserte bus
-                    matrice[9].push(string.replace(/.*"Desserte Tram":"(Oui|Non)",.*/, '$1')); // Desserte tram
-                    matrice[10].push(string.replace(/.*"Numero de la voie":"(.*)","Nom de la voie.*/, '$1')); // Numero de la voie
-                    matrice[11].push(string.replace(/.*"Nom de la voie":"(.*)","Nom du lieu dit.*/, '$1')); // Nom de la voie
-                    matrice[12].push(string.replace(/.*"Nom du lieu dit":"(.*)","Code postal.*/, '$1')); // Nom du lieu dit
-                    matrice[13].push(string.replace(/.*"Installation particulière":"(.*|Non)","Multi commune".*/, '$1')); // Installation particulière
-                    matrice[14].push(string.replace(/.*"Aucun aménagement d'accessibilité":"(Oui|Non)".*/, '$1')); // Aucun aménagement d'accessibilité
-                    matrice[15].push(string.replace(/.*"Accessibilité handicapés à mobilité réduite":"(Oui|Non)".*/, '$1')); // Accessibilité handicapés à mobilité réduite
-                    matrice[16].push(string.replace(/.*"Nombre total de place de parking":"(\d+)?".*/, '$1')); // Nombre total de place de parking
-                    matrice[17].push(string.replace(/.*"Nombre total de place de parking handicapés":"(\d+)?".*/, '$1')); // Nombre total de place de parking handicapés
-                });
+                    db.run( "INSERT INTO installations (NumInstallation,NomInstallatio,CodeINSEE,CodeDepartement,CodePostal,NomDepartement,NomCommune,Adresse,LocX,LocY,DesserteBus,DesserteTrain,DesserteTram,InstalParticuliere,AccessibleHandicapés,NbplaceParking,NbplaceParkingHandicapés" +
+                        ") VALUES (" +
+                        element['Numéro de l\'installation'] + "," +
+                        element['Nom usuel de l\'installation'] + "," +
+                        element['Code INSEE'] + "," +
+                        element['Code du département'] + "," +
+                        element['Code postal'] + "," +
+                        element['Département'] + "," +
+                        element['Nom de la commune'] + "," +
+                        element['Numero de la voie'] + " " + element['Nom de la voie'] + " " + element['Nom du lieu dit'] + "," +
+                        element['localisation'] + "," +
+                        element['localisation'] + "," +
+                        element['Desserte bus'] + "," +
+                        element['Desserte train'] + "," +
+                        element['Desserte Tram'] + "," +
+                        element['Installation particulière'] + "," +
+                        element['Accessibilité handicapés à mobilité réduite'] + "," +
+                        element['Nombre total de place de parking'] + "," +
+                        element['Nombre total de place de parking handicapés'] + "," +
+                        ")"
+                    );
 
-                return matrice;
+                });
             });
 
     };
 
-    getStuffData(){
+    static getStuffData( db ){
         let results = [];
         let matrice = [];
         for( let i = 0; i < 60; i++ ){ matrice[i] = []; }
