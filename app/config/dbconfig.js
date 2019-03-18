@@ -10,6 +10,7 @@ let db = new sqlite3.Database('./sqlite.db');
 
 /* Init car and driver tables if they don't exist */
 let init = function () {
+
     db.run("CREATE TABLE if not exists installations (" +
         "NumInstallation INTEGER PRIMARY KEY," +
         "NomInstallation TEXT," +
@@ -27,7 +28,7 @@ let init = function () {
         "InstalParticuliere  TEXT," +
         "AccessibleHandicapés  BOOLEAN," +
         "NbplaceParking  INT," +
-        "NbplaceParkingHandicapés  INT," +
+        "NbplaceParkingHandicapés  INT" +
         ")");
 
     db.run("CREATE TABLE if not exists equipement (" +
@@ -85,12 +86,13 @@ let init = function () {
         ")");
 
     db.run("CREATE TABLE if not exists activites (" +
-        "Activitecode INTEGER " +
+        "Activitecode INTEGER, " +
         "Activitelibelle TEXT," +
         "Numerodelaficheequipement INTEGER," +
         "Niveaudelactivite TEXT," +
         "PRIMARY KEY (Numerodelaficheequipement,Activitecode)"+
         ")");
+
 };
 
 
