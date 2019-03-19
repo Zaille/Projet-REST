@@ -17,33 +17,13 @@ class readerCsv {
             .on('end', () => {
                 results.forEach(function (element) {
 
-                    /************* Activité Code *************/
-
-                    let activityCode = element['Activité code'];
-                    if( activityCode === '' ){
-                        activityCode = 0;
-                    }
-
-                    /************* Activité Libellé *************/
-
-                    let activityName = element['Activité libellé'];
-                    if( activityName === '' ){
-                        activityName = 'null';
-                    }
-
-                    /************* Niveau Activité *************/
-
-                    let activityLevel = element['Activité libellé'];
-                    if( activityLevel === '' ){
-                        activityLevel = 'null';
-                    }
-
                     /************* Insertion Matrice *************/
 
-                    matrice[0].push(parseInt(activityCode)); // Activité code
-                    matrice[1].push(JSON.stringify(activityName)); // Activité libellé
-                    matrice[2].push(parseInt(element['Numéro de la fiche équipement'])); // Numéro de la fiche équipement
-                    matrice[3].push(JSON.stringify(activityLevel)); // Niveau de l'activité
+                    matrice[0].push(parseInt(checkInt(element['Activité code']))); // Activité code
+                    matrice[1].push(JSON.stringify(checkString(element['Activité libellé']))); // Activité libellé
+                    matrice[2].push(parseInt(checkInt(element['Numéro de la fiche équipement']))); // Numéro de la fiche équipement
+                    matrice[3].push(JSON.stringify(checkString(element['Activité libellé']))); // Niveau de l'activité
+
                 });
 
                 /************* Insertion Données dans la BD *************/
@@ -88,13 +68,6 @@ class readerCsv {
                     coordX = coordonnees.replace(/^"(\d{2}\.\d+), -?\d\.\d+"$/, '$1');
                     coordY = coordonnees.replace(/^"\d{2}\.\d+, (-?\d\.\d+)"$/, '$1');
 
-                    /************* Code Postal *************/
-
-                    let codePostal = element['Code postal'];
-                    if( codePostal === '' ){
-                        codePostal = '10000';
-                    }
-
                     /************* Adresse *************/
 
                     let adresse = element['Numero de la voie'] + ' ';
@@ -118,55 +91,25 @@ class readerCsv {
                         adresse = 'null';
                     }
 
-                    /************* Déssertes Bus *************/
-
-                    let bus = element['Desserte bus'] === 'Oui';
-
-                    /************* Déssertes Train *************/
-
-                    let train = element['Desserte train'] === 'Oui';
-
-                    /************* Déssertes Tram *************/
-
-                    let tram = element['Desserte Tram'] === 'Oui';
-
-                    /************* Accessibilité handicapés à mobilité réduite *************/
-
-                    let accHand = element['Accessibilité handicapés à mobilité réduite'] === 'Oui';
-
-                    /************* Nombre total de place de parking *************/
-                    
-                    let nbPlacePark = element['Nombre total de place de parking'];
-                    if( nbPlacePark === '' ){
-                        nbPlacePark = '0';
-                    }
-
-                    /************* Nombre total de place de parking handicapés *************/
-
-                    let nbPlaceParkHand = element['Nombre total de place de parking handicapés'];
-                    if( nbPlaceParkHand === '' ){
-                        nbPlaceParkHand = '0';
-                    }
-
                     /************* Insertion Matrice *************/
 
-                    matrice[0].push(parseInt(element['Numéro de l\'installation'])); // Numéro de l'installation
-                    matrice[1].push(JSON.stringify(element['Nom usuel de l\'installation'])); // Nom usuel de l'installation
-                    matrice[2].push(parseInt(element['Code INSEE'])); // Code INSEE
-                    matrice[3].push(parseInt(element['Code du département'])); // Code du département
-                    matrice[4].push(parseInt(codePostal)); // Code postal
-                    matrice[5].push(JSON.stringify(element['Département'])); // Département
-                    matrice[6].push(JSON.stringify(element['Nom de la commune'])); // Nom de la commune
-                    matrice[7].push(JSON.stringify(adresse)); // Adresse
-                    matrice[8].push(parseFloat(coordX)); // Coordonnées X
-                    matrice[9].push(parseFloat(coordY)); // Coordonnées Y
-                    matrice[10].push(bus == true); // Désserte bus
-                    matrice[11].push(train == true); // Désserte train
-                    matrice[12].push(tram == true); // Désserte tram
-                    matrice[13].push(JSON.stringify(element['Installation particulière'])); // Installation particulière
-                    matrice[14].push(accHand == true); // Accessibilité handicapés à mobilité réduite
-                    matrice[15].push(parseInt(nbPlacePark)); // Nombre total de place de parking
-                    matrice[16].push(parseInt(nbPlaceParkHand)); // Nombre total de place de parking handicapés
+                    matrice[0].push(parseInt(checkInt(element['Numéro de l\'installation']))); // Numéro de l'installation
+                    matrice[1].push(JSON.stringify(checkString(element['Nom usuel de l\'installation']))); // Nom usuel de l'installation
+                    matrice[2].push(parseInt(checkInt(element['Code INSEE']))); // Code INSEE
+                    matrice[3].push(parseInt(checkInt(element['Code du département']))); // Code du département
+                    matrice[4].push(parseInt(checkInt(element['Code postal']))); // Code postal
+                    matrice[5].push(JSON.stringify(checkString(element['Département']))); // Département
+                    matrice[6].push(JSON.stringify(checkString(element['Nom de la commune']))); // Nom de la commune
+                    matrice[7].push(JSON.stringify(checkString(adresse))); // Adresse
+                    matrice[8].push(parseFloat(checkFloat(coordX))); // Coordonnées X
+                    matrice[9].push(parseFloat(checkFloat(coordY))); // Coordonnées Y
+                    matrice[10].push(element['Desserte bus'] === 'Oui'); // Désserte bus
+                    matrice[11].push(element['Desserte train'] === 'Oui'); // Désserte train
+                    matrice[12].push(element['Desserte Tram'] === 'Oui'); // Désserte tram
+                    matrice[13].push(JSON.stringify(checkString(element['Installation particulière']))); // Installation particulière
+                    matrice[14].push(element['Accessibilité handicapés à mobilité réduite'] === 'Oui'); // Accessibilité handicapés à mobilité réduite
+                    matrice[15].push(parseInt(checkInt(element['Nombre total de place de parking']))); // Nombre total de place de parking
+                    matrice[16].push(parseInt(checkInt(element['Nombre total de place de parking handicapés']))); // Nombre total de place de parking handicapés
 
                 });
 
@@ -210,63 +153,154 @@ class readerCsv {
             .pipe(csv({separator: ';'}))
             .on('data', (data) => results.push(data))
             .on('end', () => {
+
                 results.forEach(function (element) {
-                    matrice[0].push(element['Numéro de la fiche équipement']); // Numéro de la fiche équipement
-                    matrice[1].push(element['Equipement']); // Équipement
-                    matrice[2].push(element['Numéro de l\'installation']); // Numéro de l'installation
-                    matrice[3].push(element['Type d\'équipement']); // Type d'équipement
-                    matrice[4].push(element['Propriétaire principal']); // Propriétaire principal
-                    matrice[5].push(element['Gestionnaire principal']); // Gestionnaire principal
-                    matrice[6].push(element['Présence d\'un éclairage']); // Présence d'un éclairage
-                    matrice[7].push(element['Salle polyvalente']); // Salle polyvalente
-                    matrice[8].push(element['Etablissement de plein air']); // Etablissement de plein air
-                    matrice[9].push(element['Etablissement sportif couvert']); // Etablissement sportif couvert
-                    matrice[10].push(element['Nombre de place en tribune']); // Nombre de place en tribune
-                    matrice[11].push(element['Libellé de la nature du sol']); // Libellé de la nature du sol
-                    matrice[12].push(element['Aire d\'évolution Longueur']); // Aire d'évolution Longueur
-                    matrice[13].push(element['Aire d\'évolution Largeur']); // Aire d'évolution Largeur
-                    matrice[14].push(element['Nombre de couloir / piste / poste / etc.']); // Nombre de couloir / piste / poste / etc.
-                    matrice[15].push(element['Nombre de vestiaire sportif']); // Nombre de vestiaire sportif
-                    matrice[16].push(element['Sono fixe']); // Sono fixe
-                    matrice[17].push(element['Tableau fixe']); // Tableau fixe
-                    matrice[18].push(element['Chronométrage']); // Chronométrage
-                    matrice[19].push(element['Nombre de sanitaire public']); // Nombre de sanitaire public
-                    matrice[20].push(element['Accès handicapé mobilité Aire d\'évolution']); // Accès handicapé mobilité Aire d'évolution
-                    matrice[21].push(element['Accès handicapé mobilité Tribune']); // Accès handicapé mobilité Tribune
-                    matrice[22].push(element['Accès handicapé mobilité Vestiaire']); // Accès handicapé mobilité Vestiaire
-                    matrice[23].push(element['Accès handicapé mobilité sanitaire sportif']); // Accès handicapé mobilité sanitaire sportif
-                    matrice[24].push(element['Accès handicapé mobilité sanitaire public']); // Accès handicapé mobilité sanitaire public
-                    matrice[25].push(element['Accueil club']); // Accueil club
-                    matrice[26].push(element['Accueil salle de réunion']); // Accueil salle de réunion
-                    matrice[27].push(element['Accueil buvette']); // Accueil buvette
-                    matrice[28].push(element['Accueil infirmerie']); // Accueil infirmerie
-                    matrice[29].push(element['Accueil réception']); // Accueil réception
-                    matrice[30].push(element['Accueil local rangement']); // Accueil local rangement
-                    matrice[31].push(element['Nombre de couloirs pour les structures artificielles d\'escalade']); // Nombre de couloirs pour les structures artificielles d'escalade
-                    matrice[32].push(element['Hauteur pour les structures artificielles d\'escalade']); // Hauteur pour les structures artificielles d'escalade
-                    matrice[33].push(element['Surface pour les structures artificielles d\'escalade']); // Surface pour les structures artificielles d'escalade
-                    matrice[34].push(element['Nombre d\'aires de saut']); // Nombre d'aires de saut
-                    matrice[35].push(element['Nombre d\'aires de saut en hauteur']); // Nombre d'aires de saut en hauteur
-                    matrice[36].push(element['Nombre d\'aires de saut en longueur']); // Nombre d'aires de saut en longueur
-                    matrice[37].push(element['Nombre d\'aires de saut en longueur et triple saut']); // Nombre d'aires de saut en longueur et triple saut
-                    matrice[38].push(element['Nombre d\'aires de saut en sautoir perche']); // Nombre d'aires de saut en sautoir perche
-                    matrice[39].push(element['Nombre d\'aires de lancer']); // Nombre d'aires de lancer
-                    matrice[40].push(element['Nombre d\'aires de poids']); // Nombre d'aires de poids
-                    matrice[41].push(element['Nombre d\'aires de disque']); // Nombre d'aires de disques
-                    matrice[42].push(element['Nombre d\'aires de javelot']); // Nombre d'aires de javelot
-                    matrice[43].push(element['Nombre d\'aires de marteau']); // Nombre d'aires de marteau
-                    matrice[44].push(element['Aire de Lancer du Disque et du Marteau']); // Aire de Lancer du Disque et du Marteau
-                    matrice[45].push(element['Longueur du bassin']); // Longueur du bassin
-                    matrice[46].push(element['Largeur du bassin']); // Longueur du bassin
-                    matrice[47].push(element['Profondeur mini']); // Profondeur mini
-                    matrice[48].push(element['Profondeur maxi']); // Profondeur maxi
-                    matrice[49].push(element['Nombre total de tremplins']); // Nombre total de tremplins
+
+                    /************* Insertion Matrice *************/
+
+                    matrice[0].push(parseInt(checkInt(element['Numéro de la fiche équipement']))); // Numéro de la fiche équipement
+                    matrice[1].push(JSON.stringify(checkString(element['Equipement']))); // Équipement
+                    matrice[2].push(JSON.stringify(checkString(element['Numéro de l\'installation']))); // Numéro de l'installation
+                    matrice[3].push(JSON.stringify(checkString(element['Type d\'équipement']))); // Type d'équipement
+                    matrice[4].push(JSON.stringify(checkString(element['Propriétaire principal']))); // Propriétaire principal
+                    matrice[5].push(JSON.stringify(checkString(element['Gestionnaire principal']))); // Gestionnaire principal
+                    matrice[6].push(element['Présence d\'un éclairage'] === 'Oui'); // Présence d'un éclairage
+                    matrice[7].push(element['Salle polyvalente'] === 'Oui'); // Salle polyvalente
+                    matrice[8].push(element['Etablissement de plein air'] === 'Oui'); // Etablissement de plein air
+                    matrice[9].push(element['Etablissement sportif couvert'] === 'Oui'); // Etablissement sportif couvert
+                    matrice[10].push(parseInt(checkInt(element['Nombre de place en tribune']))); // Nombre de place en tribune
+                    matrice[11].push(JSON.stringify(checkString(element['Libellé de la nature du sol']))); // Libellé de la nature du sol
+                    matrice[12].push(parseFloat(checkFloat(element['Aire d\'évolution Longueur']))); // Aire d'évolution Longueur
+                    matrice[13].push(parseFloat(checkFloat(element['Aire d\'évolution Largeur']))); // Aire d'évolution Largeur
+                    matrice[14].push(parseInt(checkInt(element['Nombre de couloir / piste / poste / etc.']))); // Nombre de couloir / piste / poste / etc.
+                    matrice[15].push(parseInt(checkInt(element['Nombre de vestiaire sportif']))); // Nombre de vestiaire sportif
+                    matrice[16].push(element['Sono fixe'] === 'Oui'); // Sono fixe
+                    matrice[17].push(element['Tableau fixe'] === 'Oui'); // Tableau fixe
+                    matrice[18].push(element['Chronométrage'] === 'Oui'); // Chronométrage
+                    matrice[19].push(element['Nombre de sanitaire public'] === 'Oui'); // Nombre de sanitaire public
+                    matrice[20].push(element['Accès handicapé mobilité Aire d\'évolution'] === 'Oui'); // Accès handicapé mobilité Aire d'évolution
+                    matrice[21].push(element['Accès handicapé mobilité Tribune'] === 'Oui'); // Accès handicapé mobilité Tribune
+                    matrice[22].push(element['Accès handicapé mobilité Vestiaire'] === 'Oui'); // Accès handicapé mobilité Vestiaire
+                    matrice[23].push(element['Accès handicapé mobilité sanitaire sportif'] === 'Oui'); // Accès handicapé mobilité sanitaire sportif
+                    matrice[24].push(element['Accès handicapé mobilité sanitaire public'] === 'Oui'); // Accès handicapé mobilité sanitaire public
+                    matrice[25].push(element['Accueil club'] === 'Oui'); // Accueil club
+                    matrice[26].push(element['Accueil salle de réunion'] === 'Oui'); // Accueil salle de réunion
+                    matrice[27].push(element['Accueil buvette'] === 'Oui'); // Accueil buvette
+                    matrice[28].push(element['Accueil infirmerie'] === 'Oui'); // Accueil infirmerie
+                    matrice[29].push(element['Accueil réception'] === 'Oui'); // Accueil réception
+                    matrice[30].push(element['Accueil local rangement'] === 'Oui'); // Accueil local rangement
+                    matrice[31].push(parseInt(checkInt(element['Nombre de couloirs pour les structures artificielles d\'escalade']))); // Nombre de couloirs pour les structures artificielles d'escalade
+                    matrice[32].push(parseInt(checkInt(element['Hauteur pour les structures artificielles d\'escalade']))); // Hauteur pour les structures artificielles d'escalade
+                    matrice[33].push(parseFloat(checkFloat(element['Surface pour les structures artificielles d\'escalade']))); // Surface pour les structures artificielles d'escalade
+                    matrice[34].push(parseInt(checkInt(element['Nombre d\'aires de saut']))); // Nombre d'aires de saut
+                    matrice[35].push(parseInt(checkInt(element['Nombre d\'aires de saut en hauteur']))); // Nombre d'aires de saut en hauteur
+                    matrice[36].push(parseInt(checkInt(element['Nombre d\'aires de saut en longueur']))); // Nombre d'aires de saut en longueur
+                    matrice[37].push(parseInt(checkInt(element['Nombre d\'aires de saut en longueur et triple saut']))); // Nombre d'aires de saut en longueur et triple saut
+                    matrice[38].push(parseInt(checkInt(element['Nombre d\'aires de saut en sautoir perche']))); // Nombre d'aires de saut en sautoir perche
+                    matrice[39].push(parseInt(checkInt(element['Nombre d\'aires de lancer']))); // Nombre d'aires de lancer
+                    matrice[40].push(parseInt(checkInt(element['Nombre d\'aires de poids']))); // Nombre d'aires de poids
+                    matrice[41].push(parseInt(checkInt(element['Nombre d\'aires de disque']))); // Nombre d'aires de disques
+                    matrice[42].push(parseInt(checkInt(element['Nombre d\'aires de javelot']))); // Nombre d'aires de javelot
+                    matrice[43].push(parseInt(checkInt(element['Nombre d\'aires de marteau']))); // Nombre d'aires de marteau
+                    matrice[44].push(parseInt(checkInt(element['Nombre d\'aires de lancer mixte disque/marteau']))); // Aire de Lancer du Disque et du Marteau
+                    matrice[45].push(parseFloat(checkFloat(element['Longueur du bassin']))); // Longueur du bassin
+                    matrice[46].push(parseFloat(checkFloat(element['Largeur du bassin']))); // Longueur du bassin
+                    matrice[47].push(parseFloat(checkFloat(element['Profondeur mini']))); // Profondeur mini
+                    matrice[48].push(parseFloat(checkFloat(element['Profondeur maxi']))); // Profondeur maxi
+                    matrice[49].push(parseInt(checkInt(element['Nombre total de tremplins']))); // Nombre total de tremplins
 
                 });
 
+                /************* Insertion Données dans la BD *************/
+
+                /* for( let i = 0; i < matrice[0].length; i++ ){
+
+                    db.run( "INSERT INTO equipement (Numequipement,Equipement,NumInstallation,Typeequipement,Proprietaire,Gestionnaire,Eclairage,Sallepolyvalente,EtabPleinAir,EtabSportifCouvert,NbplaceTribune,Typedusol,AireEvolLongueur,AireEvolLargeur,NbCouloir,NbVerstiaireStortif,SonoFixe,TableauFixe,Chronometrage,SanitairePublic,AcHandMobiAireEvol,AcHandMobiTribune,AcHandMobiVestiaire,AcHandMobiSanitairePublic,AcHandMobiSanitaireSportif,AccueilClub,AccueilSalledeReunion,AccueilBuvette,AccueilInfirmerie,AccueilReception,AccueilLocalRangement,NbcouloirEscalade,Hauteurescalade,Surfaceescalade,Nbairesdesaut,Nbairesauthauteur,Nbairessautlongueur,Nbairessautlongueurettriplesaut,Nbairessautsautoirperche,Nbaireslancer,Nbairespoid,Nbairesdisque,Nbairesjavelot,Nombreairesmarteau,Nombreaireslancermixtedisquemarteau,Longueurbassin,Largeurbassin,Profondeurmini,Profondeurmaxi,Nbtotaltremplins)" +
+                        " VALUES (" +
+                        matrice[0][i] + "," +
+                        matrice[1][i] + "," +
+                        matrice[2][i] + "," +
+                        matrice[3][i] + "," +
+                        matrice[4][i] + "," +
+                        matrice[5][i] + "," +
+                        matrice[6][i] + "," +
+                        matrice[7][i] + "," +
+                        matrice[8][i] + "," +
+                        matrice[9][i] + "," +
+                        matrice[10][i] + "," +
+                        matrice[11][i] + "," +
+                        matrice[12][i] + "," +
+                        matrice[13][i] + "," +
+                        matrice[14][i] + "," +
+                        matrice[15][i] + "," +
+                        matrice[16][i] + "," +
+                        matrice[17][i] + "," +
+                        matrice[18][i] + "," +
+                        matrice[19][i] + "," +
+                        matrice[20][i] + "," +
+                        matrice[21][i] + "," +
+                        matrice[22][i] + "," +
+                        matrice[23][i] + "," +
+                        matrice[24][i] + "," +
+                        matrice[25][i] + "," +
+                        matrice[26][i] + "," +
+                        matrice[27][i] + "," +
+                        matrice[28][i] + "," +
+                        matrice[29][i] + "," +
+                        matrice[30][i] + "," +
+                        matrice[31][i] + "," +
+                        matrice[32][i] + "," +
+                        matrice[33][i] + "," +
+                        matrice[34][i] + "," +
+                        matrice[35][i] + "," +
+                        matrice[36][i] + "," +
+                        matrice[37][i] + "," +
+                        matrice[38][i] + "," +
+                        matrice[39][i] + "," +
+                        matrice[40][i] + "," +
+                        matrice[41][i] + "," +
+                        matrice[42][i] + "," +
+                        matrice[43][i] + "," +
+                        matrice[44][i] + "," +
+                        matrice[45][i] + "," +
+                        matrice[46][i] + "," +
+                        matrice[47][i] + "," +
+                        matrice[48][i] + "," +
+                        matrice[49][i] + ")"
+                    );
+                } */
+
             });
+
     }
 
+}
+
+function checkString( s ) {
+    let result = s;
+    if( result === '' ){
+        result = 'null';
+    }
+
+    return result;
+}
+
+function checkInt( i ) {
+    let result = i;
+    if( result == '' ){
+        result = 0;
+    }
+
+    return result;
+}
+
+function checkFloat( f ) {
+    let result = f;
+    if( result == '' ){
+        result = 0.00;
+    }
+
+    return result;
 }
 
 module.exports = readerCsv;
