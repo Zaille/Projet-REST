@@ -56,7 +56,7 @@ let init = function () {
         "SonoFixe BOOLEAN," +
         "TableauFixe BOOLEAN," +
         "Chronometrage BOOLEAN," +
-        "SanitairePublic BOOLEAN," + //
+        "SanitairePublic BOOLEAN," +
         "AcHandMobiAireEvol BOOLEAN," +
         "AcHandMobiTribune BOOLEAN," +
         "AcHandMobiVestiaire BOOLEAN," +
@@ -74,7 +74,6 @@ let init = function () {
         "Nbairesdesaut INT,"+
         "Nbairesauthauteur INT,"+
         "Nbairessautlongueur INT,"+
-        "Nbairessautlongueurtriplesaut INT,"+
         "Nbairessautlongueurettriplesaut INT,"+
         "Nbairessautsautoirperche INT,"+
         "Nbaireslancer INT,"+
