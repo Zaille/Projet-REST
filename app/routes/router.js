@@ -6,6 +6,5 @@ const router = express.Router();
 
 /* API routes */
 router.use('/ville', require('./api/villeRoutes'));
-router.use('/acitivty', require('./api/activityRoutes'));
-
+router.use('/installation', require('./api/i'))
 module.exports = router;

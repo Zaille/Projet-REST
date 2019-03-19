@@ -13,24 +13,23 @@ class InstallationDao {
         this.common = new daoCommon();
     }
 
-    /**
-     * Tries to find an entity using its Id / Primary Key
-     * @params id
-     * @return entity
-     */
-    findById(id) {
-        let sqlRequest = "SELECT id, maker, model, year, driver FROM car WHERE id=$id";
-        let sqlParams = {$id: id};
+
+    listdepartement() {
+        let sqlRequest = "SELECT CodeDepartement,NomDepartement FROM installations ";
         return this.common.findOne(sqlRequest, sqlParams).then(row =>
-            new Car(row.id, row.maker, row.model, row.year, row.driver));
+            console.log(row.CodeDepartement +" "+ row.NomDepartement));
     };
 
-    /**
-     * Finds all entities.
-     * @return all entities
-     */
+    listville() {
+        let sqlRequest = "SELECT CodePostal, NomCommune FROM installations";
+        let sqlParams = {$id: id};
+        return this.common.findOne(sqlRequest, sqlParams).then(row =>
+            console.log(row.CodePostal+" "+ row.NomCommune));
+    };
+
+
     findAll() {
-        let sqlRequest = "SELECT * FROM car";
+        let sqlRequest = "SELECT * FROM installations";
         return this.common.findAll(sqlRequest).then(rows => {
             let cars = [];
             for (const row of rows) {
@@ -92,4 +91,4 @@ class InstallationDao {
 
 }
 
-module.exports = CarDao;
+module.exports = InstallationDao;
