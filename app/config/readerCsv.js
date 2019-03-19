@@ -16,15 +16,39 @@ class readerCsv {
             .on('data', (data) => results.push(data))
             .on('end', () => {
                 results.forEach(function (element) {
-                    matrice[0].push(parseInt(element['Activité code'])); // Activité code
-                    matrice[1].push(JSON.stringify(element['Activité libellé'])); // Activité libellé
+
+                    /************* Activité Code *************/
+
+                    let activityCode = element['Activité code'];
+                    if( activityCode === '' ){
+                        activityCode = 0;
+                    }
+
+                    /************* Activité Libellé *************/
+
+                    let activityName = element['Activité libellé'];
+                    if( activityName === '' ){
+                        activityName = 'null';
+                    }
+
+                    /************* Niveau Activité *************/
+
+                    let activityLevel = element['Activité libellé'];
+                    if( activityLevel === '' ){
+                        activityLevel = 'null';
+                    }
+
+                    /************* Insertion Matrice *************/
+
+                    matrice[0].push(parseInt(activityCode)); // Activité code
+                    matrice[1].push(JSON.stringify(activityName)); // Activité libellé
                     matrice[2].push(parseInt(element['Numéro de la fiche équipement'])); // Numéro de la fiche équipement
-                    matrice[3].push(JSON.stringify(element['Niveau de l\'activité - Classif.'])); // Niveau de l'activité
+                    matrice[3].push(JSON.stringify(activityLevel)); // Niveau de l'activité
                 });
 
                 /************* Insertion Données dans la BD *************/
 
-                /* for( let i = 0; i < matrice[0].length; i++ ){
+                /*for( let i = 0; i < matrice[0].length; i++ ){
 
                     db.run( "INSERT INTO activites (Activitecode,Activitelibelle,Numerodelaficheequipement,Niveaudelactivite)" +
                         " VALUES (" +
@@ -33,7 +57,7 @@ class readerCsv {
                         matrice[2][i] + "," +
                         matrice[3][i] + ")"
                     );
-                } */
+                }*/
 
             });
 
@@ -66,32 +90,28 @@ class readerCsv {
 
                     /************* Code Postal *************/
 
-                    let codePostal;
-                    if( element['Code postal'] === '' ){
+                    let codePostal = element['Code postal'];
+                    if( codePostal === '' ){
                         codePostal = '10000';
-                    } else {
-                        codePostal = element['Code postal'];
                     }
 
                     /************* Adresse *************/
 
-                    let adresse = '';
+                    let adresse = element['Numero de la voie'] + ' ';
                     if( element['Numero de la voie'] === '' ){
-                        adresse += '';
-                    } else {
-                        adresse = element['Numero de la voie'] + ' ';
+                        adresse = '';
                     }
 
                     if( element['Nom de la voie'] === '' ){
                         adresse += '';
                     } else {
-                        adresse = element['Nom de la voie'] + ' ';
+                        adresse += element['Nom de la voie'] + ' ';
                     }
 
                     if( element['Nom du lieu dit'] === '' ){
                         adresse += '';
                     } else {
-                        adresse = element['Nom du lieu dit'] + ' ';
+                        adresse += element['Nom du lieu dit'];
                     }
 
                     if( adresse === '' ){
@@ -100,45 +120,35 @@ class readerCsv {
 
                     /************* Déssertes Bus *************/
 
-                    let bus;
-
-                    bus = element['Desserte bus'] === 'Oui';
+                    let bus = element['Desserte bus'] === 'Oui';
 
                     /************* Déssertes Train *************/
 
-                    let train;
-
-                    train = element['Desserte train'] === 'Oui';
+                    let train = element['Desserte train'] === 'Oui';
 
                     /************* Déssertes Tram *************/
 
-                    let tram;
-
-                    tram = element['Desserte Tram'] === 'Oui';
+                    let tram = element['Desserte Tram'] === 'Oui';
 
                     /************* Accessibilité handicapés à mobilité réduite *************/
 
-                    let accHand;
-
-                    accHand = element['Accessibilité handicapés à mobilité réduite'] === 'Oui';
+                    let accHand = element['Accessibilité handicapés à mobilité réduite'] === 'Oui';
 
                     /************* Nombre total de place de parking *************/
                     
-                    let nbPlacePark;
-                    if( element['Nombre total de place de parking'] === '' ){
+                    let nbPlacePark = element['Nombre total de place de parking'];
+                    if( nbPlacePark === '' ){
                         nbPlacePark = '0';
-                    } else {
-                        nbPlacePark = element['Nombre total de place de parking'];
                     }
 
                     /************* Nombre total de place de parking handicapés *************/
 
-                    let nbPlaceParkHand;
-                    if( element['Nombre total de place de parking handicapés'] === '' ){
+                    let nbPlaceParkHand = element['Nombre total de place de parking handicapés'];
+                    if( nbPlaceParkHand === '' ){
                         nbPlaceParkHand = '0';
-                    } else {
-                        nbPlaceParkHand = element['Nombre total de place de parking handicapés'];
                     }
+
+                    /************* Insertion Matrice *************/
 
                     matrice[0].push(parseInt(element['Numéro de l\'installation'])); // Numéro de l'installation
                     matrice[1].push(JSON.stringify(element['Nom usuel de l\'installation'])); // Nom usuel de l'installation
@@ -238,28 +248,22 @@ class readerCsv {
                     matrice[34].push(element['Nombre d\'aires de saut']); // Nombre d'aires de saut
                     matrice[35].push(element['Nombre d\'aires de saut en hauteur']); // Nombre d'aires de saut en hauteur
                     matrice[36].push(element['Nombre d\'aires de saut en longueur']); // Nombre d'aires de saut en longueur
-                    matrice[37].push(element['Nombre d\'aires de saut en triple saut']); // Nombre d'aires de saut en triple saut
-                    matrice[38].push(element['Nombre d\'aires de saut en longueur et triple saut']); // Nombre d'aires de saut en longueur et triple saut
-                    matrice[39].push(element['Nombre d\'aires de saut en sautoir perche']); // Nombre d'aires de saut en sautoir perche
+                    matrice[37].push(element['Nombre d\'aires de saut en longueur et triple saut']); // Nombre d'aires de saut en longueur et triple saut
+                    matrice[38].push(element['Nombre d\'aires de saut en sautoir perche']); // Nombre d'aires de saut en sautoir perche
+                    matrice[39].push(element['Nombre d\'aires de lancer']); // Nombre d'aires de lancer
                     matrice[40].push(element['Nombre d\'aires de poids']); // Nombre d'aires de poids
-                    matrice[41].push(element['Nombre d\'aires de disques']); // Nombre d'aires de disques
-                    matrice[42].push(element['Nombre d\'aires de disques']); // Nombre d'aires de disques
-                    matrice[43].push(element['Nombre d\'aires de disques']); // Nombre d'aires de disques
+                    matrice[41].push(element['Nombre d\'aires de disque']); // Nombre d'aires de disques
+                    matrice[42].push(element['Nombre d\'aires de javelot']); // Nombre d'aires de javelot
+                    matrice[43].push(element['Nombre d\'aires de marteau']); // Nombre d'aires de marteau
+                    matrice[44].push(element['Aire de Lancer du Disque et du Marteau']); // Aire de Lancer du Disque et du Marteau
+                    matrice[45].push(element['Longueur du bassin']); // Longueur du bassin
+                    matrice[46].push(element['Largeur du bassin']); // Longueur du bassin
+                    matrice[47].push(element['Profondeur mini']); // Profondeur mini
+                    matrice[48].push(element['Profondeur maxi']); // Profondeur maxi
+                    matrice[49].push(element['Nombre total de tremplins']); // Nombre total de tremplins
 
-                    //matrice[0].push(element['']); // Code du département
-                    //matrice[1].push(string.replace(/.*"Departement":"(.*)","Code INSEE.*/, '$1')); // Departement
-                    //matrice[2].push(string.replace(/.*"Code INSEE":"(\d{5})".*/, '$1')); // Code INSEE
-                    //matrice[3].push(string.replace(/.*"Commune":"(.*)","Numéro de l'installation.*/, '$1')); // Commune
-                    //matrice[5].push(string.replace(/.*"Nom usuel de l'installation":"(.*)","Numéro de la fiche équipement.*/, '$1')); // Nom usuel de l'installation
-                    //matrice[8].push(string.replace(/.*"Batiment":"(.*)","Nombre d'équipements identiques.*/, '$1')); // Batiment --
-                    //matrice[9].push(string.replace(/.*"Type d'équipement_Code":"(\d*)".*/, '$1')); // Type d'équipement_Code
-                    //matrice[17].push(string.replace(/.*"Catégorie établissement recevant du public de 1 à 5":"(.*)","Année de mise en service.*/, '$1')); // Catégorie établissement recevant du public de 1 à 5
-                    //matrice[27].push(string.replace(/.*"localisation":"(.*)"}/, '$1')); // Localisation
-                    //matrice[37].push(string.replace(/.*"Accueil bureau":"(Oui|Non)".*/, '$1')); // Accueil bureau
-                    //matrice[43].push(string.replace(/.*"Site escalade Nombre de voies":"(\d*)","Classe fédérale mi.*/, '$1')); // Site escalade Nombre de voies
                 });
 
-                // console.log(matrice[31])
             });
     }
 
