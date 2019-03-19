@@ -1,9 +1,6 @@
 /* Load Controller Common function */
 const controllerCommon = require('./common/controllerCommon');
 
-/* Load Driver entity */
-const Activity = require('../model/activity');
-
 /**
  * Driver Controller
  */
