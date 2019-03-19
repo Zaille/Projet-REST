@@ -1,9 +1,6 @@
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');
 
-/* Load Car entity */
-const Ville = require('../model/ville');
-
 /**
  * Car Controller
  */

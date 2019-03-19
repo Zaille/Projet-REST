@@ -101,9 +101,9 @@ let init = function () {
     );
 
     Promise.all(promesses).then(function () {
-        csv.getActivityData(db);
-        // csv.getInstallationData(db);
-        // csv.getStuffData(db);
+        //csv.getActivityData(db);
+        //csv.getInstallationData(db);
+        //csv.getStuffData(db);
     })
 
 };
