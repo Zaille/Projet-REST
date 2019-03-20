@@ -41,16 +41,16 @@ class readerCsv {
                         matrice[1][i] + "," +
                         matrice[2][i] + "," +
                         matrice[3][i] + ")"
-                    , function (err,rows) {
-                            if (err) {
-                                return console.log("insertion"+i+" error ="+err.message);
-                            }
-                            console.log(i);
-                    }));
-                    test = i;
-                }
-                Promise.all(promesses).then(function () {
-                    console.log('fini'+test);
+                        , function (err,rows) {
+                                if (err) {
+                                    return console.log("insertion"+i+" error ="+err.message);
+                                }
+                                console.log(i);
+                        }));
+                        test = i;
+                    }
+                    Promise.all(promesses).then(function () {
+                        console.log('fini'+test);
                     let p = [];
                     p.push(db.prepare("select * from activites ", function (err, rows) {
 
@@ -80,7 +80,7 @@ class readerCsv {
             matrice[i] = [];
         }
 
-        fs.createReadStream('/home/ioan/Bureau/Tech. Prod. Log./Projet-REST-master/data/234400034_004-010_fiches-installations-rpdl.csv')
+        fs.createReadStream(__dirname+'/../../data/234400034_004-010_fiches-installations-rpdl.csv')
             .pipe(csv({separator: ';'}))
             .on('data', (data) => results.push(data))
             .on('end', () => {
@@ -121,15 +121,16 @@ class readerCsv {
                     }
 
                     /************* Insertion Matrice *************/
+                    let reg = new RegExp("\\\"", "g");
 
                     matrice[0].push(parseInt(checkInt(element['Numéro de l\'installation']))); // Numéro de l'installation
-                    matrice[1].push(JSON.stringify(checkString(element['Nom usuel de l\'installation']))); // Nom usuel de l'installation
+                    matrice[1].push(JSON.stringify(checkString(element['Nom usuel de l\'installation'].replace(reg,"")))); // Nom usuel de l'installation
                     matrice[2].push(parseInt(checkInt(element['Code INSEE']))); // Code INSEE
                     matrice[3].push(parseInt(checkInt(element['Code du département']))); // Code du département
                     matrice[4].push(parseInt(checkInt(element['Code postal']))); // Code postal
-                    matrice[5].push(JSON.stringify(checkString(element['Département']))); // Département
-                    matrice[6].push(JSON.stringify(checkString(element['Nom de la commune']))); // Nom de la commune
-                    matrice[7].push(JSON.stringify(checkString(adresse))); // Adresse
+                    matrice[5].push(JSON.stringify(checkString(element['Département'].replace(reg,"")))); // Département
+                    matrice[6].push(JSON.stringify(checkString(element['Nom de la commune'].replace(reg,"")))); // Nom de la commune
+                    matrice[7].push(JSON.stringify(checkString(adresse.replace(reg,"")))); // Adresse
                     matrice[8].push(parseFloat(checkFloat(coordX))); // Coordonnées X
                     matrice[9].push(parseFloat(checkFloat(coordY))); // Coordonnées Y
                     matrice[10].push(element['Desserte bus'] === 'Oui'); // Désserte bus
@@ -143,10 +144,29 @@ class readerCsv {
                 });
 
                 /************* Insertion Données dans la BD *************/
+                let promesses = [];
 
-                /* for( let j = 0; j < matrice[0].length; j++ ){
+                for( let j = 0; j < matrice[0].length; j++ ){
+                    console.log(j + " VALUES (" +
+                        matrice[0][j] + "," +
+                        matrice[1][j] + "," +
+                        matrice[2][j] + "," +
+                        matrice[3][j] + "," +
+                        matrice[4][j] + "," +
+                        matrice[5][j] + "," +
+                        matrice[6][j] + "," +
+                        matrice[7][j] + "," +
+                        matrice[8][j] + "," +
+                        matrice[9][j] + "," +
+                        matrice[10][j] + "," +
+                        matrice[11][j] + "," +
+                        matrice[12][j] + "," +
+                        matrice[13][j] + "," +
+                        matrice[14][j] + "," +
+                        matrice[15][j] + "," +
+                        matrice[16][j] + ")");
 
-                    db.run( "INSERT INTO installations (NumInstallation,NomInstallation,CodeINSEE,CodeDepartement,CodePostal,NomDepartement,NomCommune,Adresse,LocX,LocY,DesserteBus,DesserteTrain,DesserteTram,InstalParticuliere,AccessibleHandicapés,NbplaceParking,NbplaceParkingHandicapés)" +
+                    promesses.push(db.run( "INSERT INTO installations(NumInstallation,NomInstallation,CodeINSEE,CodeDepartement,CodePostal,NomDepartement,NomCommune,Adresse,LocX,LocY,DesserteBus,DesserteTrain,DesserteTram,InstalParticuliere,AccessibleHandicapés,NbplaceParking,NbplaceParkingHandicapés)" +
                         " VALUES (" +
                         matrice[0][j] + "," +
                         matrice[1][j] + "," +
@@ -165,8 +185,16 @@ class readerCsv {
                         matrice[14][j] + "," +
                         matrice[15][j] + "," +
                         matrice[16][j] + ")"
-                    );
-                } */
+                    ), function (err,rows) {
+                        if (err) {
+                            console.log("insertion"+j+" error ="+err.message);
+                        }
+                        console.log(j);
+                    });
+            }
+                Promise.all(promesses).then(function () {
+                    console.log('finidzdz');;
+                });
 
             });
     }
@@ -178,27 +206,29 @@ class readerCsv {
             matrice[i] = [];
         }
 
-        fs.createReadStream('/home/ioan/Bureau/Tech. Prod. Log./Projet-REST-master/data/234400034_004-011_fiches-equipements-rpdl.csv')
+        fs.createReadStream(__dirname+'/../../data/234400034_004-011_fiches-equipements-rpdl.csv')
             .pipe(csv({separator: ';'}))
             .on('data', (data) => results.push(data))
             .on('end', () => {
+
+                let reg = new RegExp("\\\"", "g");
 
                 results.forEach(function (element) {
 
                     /************* Insertion Matrice *************/
 
                     matrice[0].push(parseInt(checkInt(element['Numéro de la fiche équipement']))); // Numéro de la fiche équipement
-                    matrice[1].push(JSON.stringify(checkString(element['Equipement']))); // Équipement
-                    matrice[2].push(JSON.stringify(checkString(element['Numéro de l\'installation']))); // Numéro de l'installation
-                    matrice[3].push(JSON.stringify(checkString(element['Type d\'équipement']))); // Type d'équipement
-                    matrice[4].push(JSON.stringify(checkString(element['Propriétaire principal']))); // Propriétaire principal
-                    matrice[5].push(JSON.stringify(checkString(element['Gestionnaire principal']))); // Gestionnaire principal
+                    matrice[1].push(JSON.stringify(checkString(element['Equipement'].replace(reg,"")))); // Équipement
+                    matrice[2].push(JSON.stringify(checkString(element['Numéro de l\'installation'].replace(reg,"")))); // Numéro de l'installation
+                    matrice[3].push(JSON.stringify(checkString(element['Type d\'équipement'].replace(reg,"")))); // Type d'équipement
+                    matrice[4].push(JSON.stringify(checkString(element['Propriétaire principal'].replace(reg,"")))); // Propriétaire principal
+                    matrice[5].push(JSON.stringify(checkString(element['Gestionnaire principal'].replace(reg,"")))); // Gestionnaire principal
                     matrice[6].push(element['Présence d\'un éclairage'] === 'Oui'); // Présence d'un éclairage
                     matrice[7].push(element['Salle polyvalente'] === 'Oui'); // Salle polyvalente
                     matrice[8].push(element['Etablissement de plein air'] === 'Oui'); // Etablissement de plein air
                     matrice[9].push(element['Etablissement sportif couvert'] === 'Oui'); // Etablissement sportif couvert
                     matrice[10].push(parseInt(checkInt(element['Nombre de place en tribune']))); // Nombre de place en tribune
-                    matrice[11].push(JSON.stringify(checkString(element['Libellé de la nature du sol']))); // Libellé de la nature du sol
+                    matrice[11].push(JSON.stringify(checkString(element['Libellé de la nature du sol'].replace(reg,"")))); // Libellé de la nature du sol
                     matrice[12].push(parseFloat(checkFloat(element['Aire d\'évolution Longueur']))); // Aire d'évolution Longueur
                     matrice[13].push(parseFloat(checkFloat(element['Aire d\'évolution Largeur']))); // Aire d'évolution Largeur
                     matrice[14].push(parseInt(checkInt(element['Nombre de couloir / piste / poste / etc.']))); // Nombre de couloir / piste / poste / etc.
@@ -241,10 +271,11 @@ class readerCsv {
                 });
 
                 /************* Insertion Données dans la BD *************/
+                let promesses = [];
 
-                /* for( let i = 0; i < matrice[0].length; i++ ){
+                for( let i = 0; i < matrice[0].length; i++ ){
 
-                    db.run( "INSERT INTO equipement (Numequipement,Equipement,NumInstallation,Typeequipement,Proprietaire,Gestionnaire,Eclairage,Sallepolyvalente,EtabPleinAir,EtabSportifCouvert,NbplaceTribune,Typedusol,AireEvolLongueur,AireEvolLargeur,NbCouloir,NbVerstiaireStortif,SonoFixe,TableauFixe,Chronometrage,SanitairePublic,AcHandMobiAireEvol,AcHandMobiTribune,AcHandMobiVestiaire,AcHandMobiSanitairePublic,AcHandMobiSanitaireSportif,AccueilClub,AccueilSalledeReunion,AccueilBuvette,AccueilInfirmerie,AccueilReception,AccueilLocalRangement,NbcouloirEscalade,Hauteurescalade,Surfaceescalade,Nbairesdesaut,Nbairesauthauteur,Nbairessautlongueur,Nbairessautlongueurettriplesaut,Nbairessautsautoirperche,Nbaireslancer,Nbairespoid,Nbairesdisque,Nbairesjavelot,Nombreairesmarteau,Nombreaireslancermixtedisquemarteau,Longueurbassin,Largeurbassin,Profondeurmini,Profondeurmaxi,Nbtotaltremplins)" +
+                    promesses.push(db.run( "INSERT INTO equipement (Numequipement,Equipement,NumInstallation,Typeequipement,Proprietaire,Gestionnaire,Eclairage,Sallepolyvalente,EtabPleinAir,EtabSportifCouvert,NbplaceTribune,Typedusol,AireEvolLongueur,AireEvolLargeur,NbCouloir,NbVerstiaireStortif,SonoFixe,TableauFixe,Chronometrage,SanitairePublic,AcHandMobiAireEvol,AcHandMobiTribune,AcHandMobiVestiaire,AcHandMobiSanitairePublic,AcHandMobiSanitaireSportif,AccueilClub,AccueilSalledeReunion,AccueilBuvette,AccueilInfirmerie,AccueilReception,AccueilLocalRangement,NbcouloirEscalade,Hauteurescalade,Surfaceescalade,Nbairesdesaut,Nbairesauthauteur,Nbairessautlongueur,Nbairessautlongueurettriplesaut,Nbairessautsautoirperche,Nbaireslancer,Nbairespoid,Nbairesdisque,Nbairesjavelot,Nombreairesmarteau,Nombreaireslancermixtedisquemarteau,Longueurbassin,Largeurbassin,Profondeurmini,Profondeurmaxi,Nbtotaltremplins)" +
                         " VALUES (" +
                         matrice[0][i] + "," +
                         matrice[1][i] + "," +
@@ -296,8 +327,16 @@ class readerCsv {
                         matrice[47][i] + "," +
                         matrice[48][i] + "," +
                         matrice[49][i] + ")"
-                    );
-                } */
+                    ), function (err,rows) {
+                        if (err) {
+                            console.log("insertion"+j+" error ="+err.message);
+                        }
+                        console.log(j);
+                    });
+                }
+                Promise.all(promesses).then(function () {
+                    console.log('finidzdz');;
+                });
 
             });
 

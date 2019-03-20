@@ -103,7 +103,7 @@ let init = function () {
         console.log('ici');
         csv.getActivityData(db);
 
-        //csv.getInstallationData(db);
+        csv.getInstallationData(db);
         csv.getStuffData(db);
     })
 
