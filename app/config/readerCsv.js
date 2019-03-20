@@ -7,11 +7,12 @@ class readerCsv {
 
         let results = [];
         let matrice = [];
+
         for (let i = 0; i < 8; i++) {
             matrice[i] = [];
         }
-
-        fs.createReadStream('/home/ioan/Bureau/Tech. Prod. Log./Projet-REST-master/data/234400034_004-009_activites-des-fiches-equipements-rpdl.csv')
+         let test = 0;
+        fs.createReadStream(__dirname+'/../../data/234400034_004-009_activites-des-fiches-equipements-rpdl.csv')
             .pipe(csv({separator: ';'}))
             .on('data', (data) => results.push(data))
             .on('end', () => {
@@ -28,17 +29,45 @@ class readerCsv {
 
                 /************* Insertion Données dans la BD *************/
 
-                /*for( let i = 0; i < matrice[0].length; i++ ){
 
-                    db.run( "INSERT INTO activites (Activitecode,Activitelibelle,Numerodelaficheequipement,Niveaudelactivite)" +
-                        " VALUES (" +
+
+                let promesses = [];
+                 let test = 0;
+                for( let i = 0; i < matrice[0].length; i++ ){
+
+                    promesses.push( db.run( "INSERT INTO activites(Activitecode,Activitelibelle,Numerodelaficheequipement,Niveaudelactivite)" +
+                        " values (" +
                         matrice[0][i] + "," +
                         matrice[1][i] + "," +
                         matrice[2][i] + "," +
                         matrice[3][i] + ")"
-                    );
-                }*/
+                    , function (err,rows) {
+                            if (err) {
+                                return console.log("insertion"+i+" error ="+err.message);
+                            }
+                            console.log(i);
+                    }));
+                    test = i;
+                }
+                Promise.all(promesses).then(function () {
+                    console.log('fini'+test);
+                    let p = [];
+                    p.push(db.prepare("select * from activites ", function (err, rows) {
 
+                       console.log(err+rows);
+                    }));
+                    p.push(db.run("select * from activites ", function (err, rows) {
+
+                        console.log(rows);
+                    }));
+                    p.push(db.all("select * from activites ", function (err, rows) {
+
+                        console.log(err+rows);
+                    }));
+                    Promise.all(p).then(function () {
+                        console.log('fini2');
+                    });
+                });
             });
 
     };

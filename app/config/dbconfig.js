@@ -100,7 +100,9 @@ let init = function () {
     );
 
     Promise.all(promesses).then(function () {
-        //csv.getActivityData(db);
+        console.log('ici');
+        csv.getActivityData(db);
+
         //csv.getInstallationData(db);
         csv.getStuffData(db);
     })
