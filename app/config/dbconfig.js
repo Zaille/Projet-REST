@@ -49,8 +49,8 @@ let init = function () {
         "EtabSportifCouvert BOOLEAN," +
         "NbplaceTribune INT," +
         "Typedusol TEXT,"+
-        "AireEvolLongueur INT," +
-        "AireEvolLargeur INT," +
+        "AireEvolLongueur DECIMAL(9,6)," +
+        "AireEvolLargeur DECIMAL(9,6)," +
         "NbCouloir INT," +
         "NbVerstiaireStortif INT," +
         "SonoFixe BOOLEAN," +
@@ -70,7 +70,7 @@ let init = function () {
         "AccueilLocalRangement BOOLEAN," +
         "NbcouloirEscalade INT," +
         "Hauteurescalade INT,"+
-        "Surfaceescalade INT,"+
+        "Surfaceescalade DECIMAL(9,6),"+
         "Nbairesdesaut INT,"+
         "Nbairesauthauteur INT,"+
         "Nbairessautlongueur INT,"+
@@ -102,7 +102,7 @@ let init = function () {
     Promise.all(promesses).then(function () {
         //csv.getActivityData(db);
         //csv.getInstallationData(db);
-        //csv.getStuffData(db);
+        csv.getStuffData(db);
     })
 
 };
