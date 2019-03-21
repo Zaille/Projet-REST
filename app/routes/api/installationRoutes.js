@@ -11,3 +11,8 @@ module.exports = router;
 router.get('/departement', function (req, res) {
     installationController.getDepartement(res);
 });
+
+router.get('/ville', function (req, res) {
+    installationController.getVilles(res);
+});
+
