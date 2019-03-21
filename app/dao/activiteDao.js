@@ -1,7 +1,5 @@
-/* Load Car entity */
-//const Ville = require('../model/ville');
+"use strict";
 
-/* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');
 
 /**
@@ -14,6 +12,7 @@ class ActivitesDao {
     }
 
     listActivites() {
+
         let sqlRequest = "SELECT Activitecode,Activitelibelle FROM activites group by 1,2";
         return this.common.findAll(sqlRequest).then(row => {
 

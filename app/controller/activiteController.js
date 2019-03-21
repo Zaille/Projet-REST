@@ -1,3 +1,4 @@
+"use strict";
 
 const controllerCommon = require('./common/controllerCommon');
 const ActivitesDao = require('../dao/activiteDao');

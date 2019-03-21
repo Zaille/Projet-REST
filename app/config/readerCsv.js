@@ -335,7 +335,7 @@ class readerCsv {
                     });
                 }
                 Promise.all(promesses).then(function () {
-                    console.log('finidzdz');;
+                    console.log('finidzdz');
                 });
 
             });

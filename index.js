@@ -23,13 +23,3 @@ app.use(bodyParser.json());
 /* Router configuration */
 const REST_API_ROOT = '/api';
 app.use(REST_API_ROOT, require('./app/routes/router'));
-
-
-/** test **/
-
-database.db.all("select NomDepartement from installations group by 1 ", function (err, rows) {
-
-    rows.forEach(function (element) {
-        console.log(element);
-    })
-});
