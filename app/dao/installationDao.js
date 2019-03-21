@@ -28,8 +28,8 @@ class InstallationDao {
 
     listville() {
         let sqlRequest = "SELECT CodePostal, NomCommune FROM installations";
-        let sqlParams = {$id: id};
-        return this.common.findOne(sqlRequest, sqlParams).then(row => {
+
+        return this.common.findAll(sqlRequest).then(row => {
             console.log(row);
             return row;
         });
