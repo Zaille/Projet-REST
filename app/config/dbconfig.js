@@ -102,7 +102,6 @@ let init = function () {
     Promise.all(promesses).then(function () {
         console.log('ici');
         csv.getActivityData(db);
-
         csv.getInstallationData(db);
         csv.getStuffData(db);
     })
