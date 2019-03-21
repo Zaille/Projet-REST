@@ -3,7 +3,7 @@
 
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');
-
+const Installation = require('../model/installation');
 /**
  * Car Data Access Object
  */
@@ -35,7 +35,21 @@ class InstallationDao {
         });
 
     };
+    getVillesId(id){
+        let sqlRequest = "SELECT * FROM installations where NomCommune like $id";
+        let sqlParams = {$id: id};
+        return this.common.findAll(sqlRequest,sqlParams).then(rows => {
+            let instal = [];
+            rows.forEach(function (row) {
+                console.log(row.NumInstallation+row.NomInstallation+row.CodeINSEE+row.CodeDepartement+row.CodePostal+row.NomDepartement+row.NomCommune+row.Adresse +row.LocX +row.LocY);
 
+                instal.push(new Installation(row.NumInstallation,row.NomInstallation ,row.CodeINSEE ,row.CodeDepartement ,row.CodePostal ,row.NomDepartement ,row.NomCommune ,row.Adresse ,row.LocX ,row.LocY ,row.DesserteBus,row.DesserteTrain,row.DesserteTram,row.InstalParticuliere,row.AccessibleHandicapés,row.NbplaceParking,row.NbplaceParkingHandicapés));
+
+            });
+            console.log(instal);
+            return instal;
+        });
+    }
 
     findAll() {
         let sqlRequest = "SELECT * FROM installations";
@@ -48,54 +62,8 @@ class InstallationDao {
         });
     };
 
-    /**
-     * Counts all the records present in the database
-     * @return count
-     */
-    countAll() {
-        let sqlRequest = "SELECT COUNT(*) AS count FROM car";
-        return this.common.findOne(sqlRequest);
-    };
 
-    /**
-     * Updates the given entity in the database
-     * @params Car
-     * @return true if the entity has been updated, false if not found and not updated
-     */
-    update(Car) {
-        let sqlRequest = "UPDATE car SET " +
-            "maker=$maker, " +
-            "model=$model, " +
-            "year=$year, " +
-            "driver=$driver " +
-            "WHERE id=$id";
 
-        let sqlParams = {
-            $maker: Car.maker,
-            $model: Car.model,
-            $year: Car.year,
-            $driver: Car.driver,
-            $id: Car.id
-        };
-        return this.common.run(sqlRequest, sqlParams);
-    };
-
-    /**
-     * Creates the given entity in the database
-     * @params Car
-     * returns database insertion status
-     */
-    create(Car) {
-        let sqlRequest = "INSERT into car (maker, model, year, driver) " +
-            "VALUES ($maker, $model, $year, $driver)";
-        let sqlParams = {
-            $maker: Car.maker,
-            $model: Car.model,
-            $year: Car.year,
-            $driver: Car.driver
-        };
-        return this.common.run(sqlRequest, sqlParams);
-    };
 
 
 }

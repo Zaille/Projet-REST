@@ -12,9 +12,9 @@ const DaoError = require('./daoError');
  */
 class Common {
 
-    findAll(sqlRequest) {
+    findAll(sqlRequest,sqlParams) {
         return new Promise(function (resolve, reject) {
-            database.db.all(sqlRequest, function (err, rows) {
+            database.db.all(sqlRequest,sqlParams, function (err, rows) {
                 if (err) {
                     reject(
                         new DaoError(20, "Internal server error")
@@ -29,6 +29,8 @@ class Common {
             })
         });
     }
+
+
 
     findOne(sqlRequest, sqlParams) {
         return new Promise(function (resolve, reject) {

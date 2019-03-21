@@ -2,7 +2,7 @@
 
 class Activite {
     constructor( ) {
-        // TODO
+
     }
 }
 

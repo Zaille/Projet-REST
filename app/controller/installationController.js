@@ -36,6 +36,12 @@ class InstallationController {
             .then(this.common.findSuccess(res))
             .catch(this.common.findError(res));
     }
+
+    getVillesId(req,res){
+        this.instalDao.getVillesId(req.params.nomville)
+            .then(this.common.findSuccess(res))
+            .catch(this.common.findError(res));
+    }
 }
 
 module.exports = InstallationController;
