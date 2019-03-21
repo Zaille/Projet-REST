@@ -15,9 +15,15 @@ class InstallationDao {
 
 
     listdepartement() {
-        let sqlRequest = "SELECT CodeDepartement,NomDepartement FROM installations ";
-        return this.common.findOne(sqlRequest, sqlParams).then(row =>
-            console.log(row.CodeDepartement +" "+ row.NomDepartement));
+        let sqlRequest = "SELECT CodeDepartement,NomDepartement FROM installations group by 1,2 ";
+        return this.common.findAll(sqlRequest).then(row => {
+
+                console.log(row)
+                return row;
+
+        });
+
+
     };
 
     listville() {

@@ -27,7 +27,7 @@ app.use(REST_API_ROOT, require('./app/routes/router'));
 
 /** test **/
 
-database.db.all("select * from activites ", function (err, rows) {
+database.db.all("select NomDepartement from installations group by 1 ", function (err, rows) {
 
     rows.forEach(function (element) {
         console.log(element);
