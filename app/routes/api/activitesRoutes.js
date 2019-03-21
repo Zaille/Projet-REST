@@ -6,6 +6,10 @@ const activitesController = new ActivitesController();
 
 module.exports = router;
 
-router.get('/test', function (req, res) {
+router.get('', function (req, res) {
     activitesController.getActivites(res);
+});
+
+router.get('/:codeactivity', function (req, res) {
+    activitesController.getActiviteId(req,res);
 });

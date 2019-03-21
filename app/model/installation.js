@@ -1,3 +1,4 @@
+"use strict";
 
 class Installation {
     constructor(numInstallation,nomInstallation,codeINSEE,codeDepartement,codePostal,nomDepartement,nomCommune,adresse,locX,locY,desserteBus,desserteTrain,desserteTram,instalParticuliere,accessibleHandicapes,nbplaceParking,nbplaceParkingHandicapes) {

@@ -1,9 +1,14 @@
-
+"use strict";
 
 class Activite {
-    constructor( ) {
 
+    constructor(activitecode,activitelibelle,numerodelaficheequipement,niveaudelactivite) {
+        this.activitecode = activitecode;
+        this.activitelibelle = activitelibelle;
+        this.numerodelaficheequipement = numerodelaficheequipement;
+        this.niveaudelactivite = niveaudelactivite;
     }
+
 }
 
 module.exports = Activite;
