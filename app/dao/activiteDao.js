@@ -1,4 +1,4 @@
-"use strict";
+    "use strict";
 
 const daoCommon = require('./commons/daoCommon');
 const Activite = require('../model/activite');
