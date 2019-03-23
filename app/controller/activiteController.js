@@ -21,6 +21,12 @@ class ActivitesController {
             .then(this.common.findSuccess(res))
             .catch(this.common.findError(res));
     }
+    getactquip(req,res){
+        this.activDao.getactquip(req.params.idequip)
+            .then(this.common.findSuccess(res))
+            .catch(this.common.findError(res));
+    }
+
 
 }
 

@@ -42,6 +42,25 @@ class ActivitesDao {
 
     }
 
+    getactquip(id) {
+
+        let sqlRequest = "SELECT * FROM activites where Numerodelaficheequipement = $id";
+        let sqlParams = {$id: id};
+
+        return this.common.findAll(sqlRequest, sqlParams).then(rows => {
+
+            let activ = [];
+
+            rows.forEach(function (row) {
+                activ.push(new Activite(row.Activitecode, row.Activitelibelle, row.Numerodelaficheequipement, row.Niveaudelactivite));
+            });
+
+            return activ;
+
+        });
+    }
+
+
 }
 
 module.exports = ActivitesDao;

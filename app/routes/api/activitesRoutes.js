@@ -10,6 +10,10 @@ router.get('', function (req, res) {
     activitesController.getActivites(res);
 });
 
-router.get('/:codeactivity', function (req, res) {
+router.get('/equipement/:idequip', function (req, res) {
+    activitesController.getactquip(req,res);
+});
+
+router.get('/id/:codeactivity', function (req, res) {
     activitesController.getActiviteId(req,res);
 });
