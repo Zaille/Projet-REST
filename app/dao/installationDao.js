@@ -8,13 +8,20 @@ const Installation = require('../model/installation');
 /**
  * Installation Data Access Object
  */
+
 class InstallationDao {
 
+    /**
+     * Constructeur
+     */
     constructor() {
         this.common = new daoCommon();
     }
 
-
+    /**
+     * Donne une liste des départements ou il y a des installations
+     * @returns une liste de couple code de departement et leur nom
+     */
     listdepartement() {
         let sqlRequest = "SELECT CodeDepartement,NomDepartement FROM installations group by 1,2";
         return this.common.findAll(sqlRequest).then(row => {
@@ -23,7 +30,10 @@ class InstallationDao {
 
     };
 
-
+    /**
+     * Donne une liste des villes ou il y a des installations
+     * @returns une liste de nom de ville
+     */
     listville() {
 
         let sqlRequest = "SELECT NomCommune FROM installations group by 1 order by 1";
@@ -34,6 +44,11 @@ class InstallationDao {
 
     };
 
+    /**
+     * Donne les instalations presentent dans une ville
+     * @param id = nom de la ville
+     * @returns un liste d'objet Installation
+     */
     getVillesId(id){
         let sqlRequest = "SELECT * FROM installations where NomCommune like $id";
         let sqlParams = {$id: id};
@@ -47,6 +62,11 @@ class InstallationDao {
         });
     }
 
+    /**
+     * Donne les instalations presentent dans un departments
+     * @param id = code du departement
+     * @returns un liste d'objet Installation
+     */
     getDepartementId(id){
 
         let sqlRequest = "SELECT * FROM installations where CodeDepartement = $id";
@@ -61,6 +81,11 @@ class InstallationDao {
         });
     }
 
+    /**
+     * Donne l'installation associer a son numero
+     * @param id = numero de l'installation
+     * @returns Un objet Installation
+     */
     getinstallation(id){
         let sqlRequest = "SELECT * FROM installations where  NumInstallation = $id";
         let sqlParams = {$id: id};

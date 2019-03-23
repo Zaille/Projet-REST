@@ -3,7 +3,7 @@
 let sqlite3 = require('sqlite3').verbose();
 let csv = require( './readerCsv');
 
-/*
+/**
  * Database configuration
  */
 
@@ -99,7 +99,6 @@ let init = function () {
     );
 
     Promise.all(promesses).then(function () {
-        console.log('ici');
         csv.getActivityData(db);
         csv.getInstallationData(db);
         csv.getStuffData(db);

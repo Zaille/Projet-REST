@@ -1,5 +1,9 @@
 "use strict";
 
+/**
+ * Classe équipement
+ */
+
 class Equipement {
 
     constructor(numequipement,equipement,numInstallation,typeequipement,proprietaire,gestionnaire,eclairage,sallepolyvalente,etabPleinAir,etabSportifCouvert,nbplaceTribune,typedusol,aireEvolLongueur,aireEvolLargeur,nbCouloir,nbVerstiaireStortif,sonoFixe,tableauFixe,chronometrage,sanitairePublic,acHandMobiAireEvol,acHandMobiTribune,acHandMobiVestiaire,acHandMobiSanitairePublic,acHandMobiSanitaireSportif,accueilClub,accueilSalledeReunion,accueilBuvette,accueilInfirmerie,accueilReception,accueilLocalRangement,nbcouloirEscalade,hauteurescalade,surfaceescalade,nbairesdesaut,nbairesauthauteur,nbairessautlongueur,nbairessautlongueurettriplesaut,nbairessautsautoirperche,nbaireslancer,nbairespoid,nbairesdisque,nbairesjavelot,nombreairesmarteau,nombreaireslancermixtedisquemarteau,longueurbassin,largeurbassin,profondeurmini,profondeurmaxi,nbtotaltremplins) {

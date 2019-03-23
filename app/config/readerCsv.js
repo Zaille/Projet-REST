@@ -1,8 +1,16 @@
 const fs = require('fs');
 const csv = require('csv-parser');
 
+
+/**
+ * Classe reader Csv
+ */
 class readerCsv {
 
+    /**
+     * Permet d'insérer les les tuples activités
+     * @param db = base de donnée
+     */
     static getActivityData(db) {
 
         let results = [];
@@ -72,6 +80,10 @@ class readerCsv {
 
     };
 
+    /**
+     * Permet d'insérer les les tuples installations
+     * @param db = base de donnée
+     */
     static getInstallationData(db) {
 
         let results = [];
@@ -199,6 +211,10 @@ class readerCsv {
             });
     }
 
+    /**
+     * Permet d'insérer les les tuples équipements
+     * @param db = base de donnée
+     */
     static getStuffData(db) {
         let results = [];
         let matrice = [];

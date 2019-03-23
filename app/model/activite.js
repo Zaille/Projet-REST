@@ -1,5 +1,9 @@
 "use strict";
 
+/**
+ * Classe activité
+ */
+
 class Activite {
 
     constructor(activitecode,activitelibelle,numerodelaficheequipement,niveaudelactivite) {

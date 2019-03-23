@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-
 const InstallationController = require('../../controller/installationController');
 const installationController = new InstallationController();
 
-
-module.exports = router;
+/**
+ * Installation Routes
+ */
 
 
 router.get('/id/:id', function (req, res) {
@@ -29,3 +29,6 @@ router.get('/ville/:nomville', function (req, res) {
     installationController.getVillesId(req,res);
 });
 
+
+
+module.exports = router;
