@@ -26,7 +26,7 @@ class InstallationDao {
 
     listville() {
 
-        let sqlRequest = "SELECT CodePostal, NomCommune FROM installations group by 1,2";
+        let sqlRequest = "SELECT CodePostal, NomCommune FROM installations group by 1,2 order by 2";
 
         return this.common.findAll(sqlRequest).then(row => {
             return row;
