@@ -27,6 +27,11 @@ class InstallationController {
             .then(this.common.findSuccess(res))
             .catch(this.common.findError(res));
     }
+
+    getDepartementId(req,res){
+        this.instalDao.getDepartementId(req.params.codedep)
+            .then(this.common.findSuccess(res))
+            .catch(this.common.findError(res));
 }
 
 module.exports = InstallationController;

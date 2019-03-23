@@ -48,6 +48,22 @@ class InstallationDao {
         });
     }
 
+    getDepartementId(id){
+
+        let sqlRequest = "SELECT * FROM installations where CodeDepartement = $id";
+        let sqlParams = {$id: id};
+        return this.common.findAll(sqlRequest,sqlParams).then(rows => {
+            let instal = [];
+            rows.forEach(function (row) {
+                instal.push(new Installation(row.NumInstallation,row.NomInstallation ,row.CodeINSEE ,row.CodeDepartement ,row.CodePostal ,row.NomDepartement ,row.NomCommune ,row.Adresse ,row.LocX ,row.LocY ,row.DesserteBus,row.DesserteTrain,row.DesserteTram,row.InstalParticuliere,row.AccessibleHandicapés,row.NbplaceParking,row.NbplaceParkingHandicapés));
+            });
+
+            return instal;
+        });
+    }
+
+
+
 }
 
 module.exports = InstallationDao;
