@@ -24,6 +24,7 @@ class InstallationDao {
 
     };
 
+
     listville() {
 
         let sqlRequest = "SELECT NomCommune FROM installations group by 1 order by 1";
