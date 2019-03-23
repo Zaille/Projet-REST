@@ -1,51 +1,48 @@
 //https://nouvelle-techno.fr/actualites/2018/05/11/pas-a-pas-inserer-une-carte-openstreetmap-sur-votre-site
-var lat;
-var lon;
-var macarte = null;
-var codePostaux = new Object();
-var codeInstallations = [];
-var marqueur=null;
-var idInstallation;
+let lat;
+let lon;
+let macarte = null;
+let codePostaux = new Object();
+let codeInstallations = [];
+let marqueur=null;
+let idInstallation;
+let numActivite = new Object();
+let numEquipement = new Object();
 $(document).ready(function() {
     fillSelects();
 
-    $("#rechercheLieuBT").click(function(){
-        $("#detailsDiv").hide(500);
-        $selecteurs = $("#lieuxBox");
+    $("#rechercheLieuBT").click(function(){                      //RECHERCHE PAR LIEU
+        $("#activitiesSelect").hide(500);
+        $("#departementsSelect").show(500);
+        $("#villesSelect").show(500);
         $("#rechercheLieuBT").css('color', 'black');
         $("#rightContainer").hide(500);
         $("#leftContainer").hide(500);
         $("#leftList").empty();
         $("#rightList").empty();
-        //TODO REQUETE LISTE VILLE ET DEPARTEMENTS
-        $selecteurs.toggle(500);
         $("#rechercheLieuBT").css('color', 'white');
         $("#rechercheActiviteBT").css('color', 'black');
     });
 
-
-    $("#rechercheActiviteBT").click(function(){
+    $("#rechercheActiviteBT").click(function(){                     //RECHERCHE PAR ACTIVITE
+        $("#activitiesSelect").show(500);
+        $("#departementsSelect").hide(500);
+        $("#villesSelect").hide(500);
         $("#detailsDiv").hide(500);
-        $selecteurs = $("#lieuxBox");
         $("#rechercheLieuBT").css('color', 'black');
         $("#rechercheActiviteBT").css('color', 'white');
         $("#rechercheLieuBT").css('color', 'black');
-        $selecteurs.hide(500);
         $("#rightContainer").hide(500);
         $("#leftList").empty();
         $("#rightList").empty();
-        $("#leftContainer").show(500);
         //TODO REQUETE LISTE DES ACTIVITES
-        for (let $i=0;$i<20;$i++){      //affiche les activités
-            $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#" style="text-decoration: none; font-size: 23px; color:#404040fa" >'   + $i+   '</a></li>')
-        }
     });
 
 
     $('#departementsSelect').on('change', function() {   //selection d'un département
         $partieGauche = $("#leftContainer");
         $("#leftList").empty();
-        var selected = codePostaux[$('#departementsSelect').find(":selected").val()]; //on récupère le département séléctionné
+        let selected = codePostaux[$('#departementsSelect').find(":selected").val()]; //on récupère le département séléctionné
         //TODO REQUETE LISTE ACTIVITES PAR département
         $.ajax({
             url: 'http://127.0.0.1:3000/api/installation/departement/'+selected, //on prépare l'envoi
@@ -55,7 +52,7 @@ $(document).ready(function() {
             success: function(data) { //si réussite
                 $.each(data, function(index, element) { //on parcourstout les élements du tableau
                     codeInstallations[index] = element.numInstallation;
-                    var adresse;
+                    let adresse;
                     if (element.adresse == "null"){
                         adresse= 'Non communiqué';
                     }else {
@@ -70,21 +67,52 @@ $(document).ready(function() {
         $partieGauche.show(500);
     });
 
+    $('#activitiesSelect').on('change', function() {   //selection d'un département
+        numEquipement = new Object();
+        let idSelected = numActivite[$('#activitiesSelect').find(":selected").val()]; //football
+        $.ajax({
+            url: 'http://127.0.0.1:3000/api/activite/id/'+idSelected, //on prépare l'envoi
+            type: 'GET',
+            dataType: 'json',
+            data: '',
+            success: function(data) { //si réussite
+                $.each(data, function(index, element) { //on parcourstout les élements du tableau
+                    numEquipement[index] = element.numerodelaficheequipement;
+                });
+            },
+            error : function(resultat, statut, erreur){ console.log(erreur); },
+            complete : function(resultat, statut){}
+        });
+        console.log(numEquipement.length)
+        for (let i=0;i<numEquipement.size;i++){         //RECEPTION DE LENSEMBLE DES  EQUIPEMENTS PROPOSANT LACTIVITE SELECTIONNEE
+            $.ajax({
+                url: 'http://127.0.0.1:3000/api/equipement/'+numEquipement[i], //on prépare l'envoi
+                type: 'GET',
+                dataType: 'json',
+                data: '',
+                success: function(data) { //si réussite
+                    console.log("received" +data);
+                },
+                error : function(resultat, statut, erreur){ console.log(erreur); },
+                complete : function(resultat, statut){}
+            });
+        }
+    });
 
     $('#villesSelect').on('change', function() {   //selection d'une ville
         $partieGauche = $("#leftContainer");
         $("#leftList").empty();
-        var selected = $('#villesSelect').find(":selected").text(); //on récupère le département séléctionné
+        let selected = $('#villesSelect').find(":selected").text(); //on récupère le département séléctionné
         //TODO REQUETE LISTE ACTIVITES PAR VILLE
         $.ajax({
             url: 'http://127.0.0.1:3000/api/installation/ville/'+selected, //on prépare l'envoi
             type: 'GET',
             dataType: 'json',
-            data: '', //on créer les parametres d'url
+            data: '',
             success: function(data) { //si réussite
                 $.each(data, function(index, element) { //on parcourstout les élements du tableau
                     codeInstallations[index] = element.numInstallation;
-                    var adresse;
+                    let adresse;
                     if (element.adresse == null){
                         adresse= 'Non communiqué';
                     }else {
@@ -113,41 +141,9 @@ function initMap() {
     }).addTo(macarte);
 }
 
-function fillSelects(){     //gère l'insertion des villes et départements dans les select
-    $.ajax({
-        url: 'http://127.0.0.1:3000/api/installation/departement', //on prépare l'envoi
-        type: 'GET',
-        dataType: 'json',
-        data: '', //on créer les parametres d'url
-        success: function(data) { //si réussite
-            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
-                $("#departementsSelect").append(new Option(element.NomDepartement, element.codeDepartement));
-                codePostaux[element.NomDepartement] = element.CodeDepartement;
-            });
-        },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){}
-    });
-
-
-    $.ajax({
-        url: 'http://127.0.0.1:3000/api/installation/ville', //on prépare l'envoi
-        type: 'GET',
-        dataType: 'json',
-        data: '', //on créer les parametres d'url
-        success: function(data) { //si réussite
-            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
-                $("#villesSelect").append(new Option(element.NomCommune, element.NomCommune));
-            });
-        },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){}
-    });
-}
-
 function openInstallationDetails(received) {
     $("#detailsDiv").show(500);
-    var liClicked = $(received).parents("li").index();
+    let liClicked = $(received).parents("li").index();
     $("#rightList").empty();
     $("#detailsInfos").empty();
     $partieDroite = $("#rightContainer");
@@ -189,11 +185,6 @@ function openInstallationDetails(received) {
         complete : function(resultat, statut){}
     });
 
-
-
-
-
-
     $.ajax({
         url: 'http://127.0.0.1:3000/api/equipement/installation/'+idInstallation, //on prépare l'envoi
         type: 'GET',
@@ -203,9 +194,6 @@ function openInstallationDetails(received) {
             $.each(data, function(index, element) {
                 $("#rightList").append('<li class="rightLi"><a href="#" onclick="displayEquipmentInfos(this)" style="text-decoration: none; font-size: 23px; color:#404040fa">' + element.typeequipement + '</a></li>');
             });
-
-            //$("#leftList").append('<li class="leftLi"><b> Nom de l\'installation: </b>'+data.nomInstallation+'</li>');
-
         },
         error : function(resultat, statut, erreur){ console.log(erreur); },
         complete : function(resultat, statut){}
@@ -215,7 +203,7 @@ function openInstallationDetails(received) {
     $('#leftList li').click(function() {    //activité selectionnée
         $tailleListe = $("#leftList");
         $( "#leftList li" ).each(function( index ) {    //refresh couleur vue
-            var $allLi = $("#leftList li").eq(index);
+            let $allLi = $("#leftList li").eq(index);
             $allLi.css("background-color", "#00000000");
         });
         $(this).css("background-color", "#25252525");
@@ -224,11 +212,9 @@ function openInstallationDetails(received) {
 
 }
 
-
 function displayEquipmentInfos(received) {
     $("#detailsInfosEquipment").empty();
-    var numEquipement = $(received).parents("li").index();
-    console.log(idInstallation+" - "+numEquipement);
+    let numEquipement = $(received).parents("li").index();
 
     $.ajax({
         url: 'http://127.0.0.1:3000/api/equipement/installation/'+idInstallation, //on prépare l'envoi
@@ -287,10 +273,58 @@ function displayEquipmentInfos(received) {
                     if(element.profondeurmaxi)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Profondeur maximale</b>' + element.profondeurmaxi + '</li>');
                     if(element.nbtotaltremplins)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de tremplins</b>' + element.nbtotaltremplins + '</li>');
                 }
-
             });
         },
         error : function(resultat, statut, erreur){ console.log(erreur); },
         complete : function(resultat, statut){}
     });
+}
+
+function fillSelects(){     //gère l'insertion des villes et départements dans les select
+    $.ajax({
+        url: 'http://127.0.0.1:3000/api/installation/departement', //on prépare l'envoi
+        type: 'GET',
+        dataType: 'json',
+        data: '', //on créer les parametres d'url
+        success: function(data) { //si réussite
+            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
+                $("#departementsSelect").append(new Option(element.NomDepartement, element.codeDepartement));
+                codePostaux[element.NomDepartement] = element.CodeDepartement;
+            });
+        },
+        error : function(resultat, statut, erreur){ console.log(erreur); },
+        complete : function(resultat, statut){}
+    });
+
+
+    $.ajax({
+        url: 'http://127.0.0.1:3000/api/installation/ville', //on prépare l'envoi
+        type: 'GET',
+        dataType: 'json',
+        data: '', //on créer les parametres d'url
+        success: function(data) { //si réussite
+            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
+                $("#villesSelect").append(new Option(element.NomCommune, element.NomCommune));
+            });
+        },
+        error : function(resultat, statut, erreur){ console.log(erreur); },
+        complete : function(resultat, statut){}
+    });
+
+    $.ajax({
+        url: 'http://127.0.0.1:3000/api/activite', //on prépare l'envoi
+        type: 'GET',
+        dataType: 'json',
+        data: '', //on créer les parametres d'url
+        success: function(data) { //si réussite
+            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
+                $("#activitiesSelect").append(new Option(element.Activitelibelle, element.Activitelibelle));
+                numActivite[element.Activitelibelle] = element.Activitecode;
+            });
+        },
+        error : function(resultat, statut, erreur){ console.log(erreur); },
+        complete : function(resultat, statut){}
+    });
+
+
 }

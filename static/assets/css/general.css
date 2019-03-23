@@ -112,7 +112,7 @@ select{
     justify-content: space-evenly;
     align-items: center;
     height: 100%;
-    width: 40%;
+
     flex-direction: column;
     margin-top: 5px;
     padding: 50px;
@@ -151,6 +151,9 @@ ul{
 .rightLi:hover{
     background-color: #12121212;
 }
+.leftLi :hover{
+    background-color: #12121212;
+}
 
 
 .leftLi{
@@ -175,9 +178,7 @@ li a{
     #leftContainer{
         width: 90%;
     }
-    #rightContainer{
-        width: 90%;
-    }
+
 }
 
 #map{
