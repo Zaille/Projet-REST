@@ -9,7 +9,7 @@ const installationController = new InstallationController();
 module.exports = router;
 
 
-router.get('/:id', function (req, res) {
+router.get('/id/:id', function (req, res) {
     installationController.getinstallation(req,res);
 });
 
