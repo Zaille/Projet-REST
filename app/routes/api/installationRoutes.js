@@ -8,6 +8,11 @@ const installationController = new InstallationController();
 
 module.exports = router;
 
+
+router.get('/:id', function (req, res) {
+    installationController.getinstallation(req,res);
+});
+
 router.get('/departement', function (req, res) {
     installationController.getDepartement(res);
 });

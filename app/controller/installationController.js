@@ -10,6 +10,13 @@ class InstallationController {
         this.instalDao = new InstallationDao();
     }
 
+
+
+    getinstallation(req,res){
+        this.instalDao.getinstallation(req.params.id)
+            .then(this.common.findSuccess(res))
+            .catch(this.common.findError(res));
+    }
     getDepartement(res){
         this.instalDao.listdepartement()
             .then(this.common.findSuccess(res))
