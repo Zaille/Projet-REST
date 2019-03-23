@@ -21,7 +21,11 @@ class EquipementsController {
             .then(this.common.findSuccess(res))
             .catch(this.common.findError(res));
     }
-
+    getEquipementparinstal(req,res){
+        this.equipDao.getEquipementparinstal(req.params.numinstal)
+            .then(this.common.findSuccess(res))
+            .catch(this.common.findError(res));
+    }
 }
 
 module.exports = EquipementsController;
