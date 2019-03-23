@@ -16,7 +16,6 @@ class InstallationDao {
 
 
     listdepartement() {
-
         let sqlRequest = "SELECT CodeDepartement,NomDepartement FROM installations group by 1,2";
         return this.common.findAll(sqlRequest).then(row => {
              return row;
