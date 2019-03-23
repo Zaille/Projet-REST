@@ -41,7 +41,7 @@ class InstallationDao {
         return this.common.findAll(sqlRequest,sqlParams).then(rows => {
             let instal = [];
             rows.forEach(function (row) {
-                instal.push(new Installation(row.NumInstallation,row.NomInstallation ,row.CodeINSEE ,row.CodeDepartement ,row.CodePostal ,row.NomDepartement ,row.NomCommune ,row.Adresse ,row.LocX ,row.LocY ,row.DesserteBus ===1,row.DesserteTrain===1,row.DesserteTram===1,row.InstalParticuliere===1,row.AccessibleHandicapés===1,row.NbplaceParking,row.NbplaceParkingHandicapés));
+                instal.push(new Installation(row.NumInstallation,row.NomInstallation ,row.CodeINSEE ,row.CodeDepartement ,row.CodePostal ,row.NomDepartement ,row.NomCommune ,row.Adresse ,row.LocX ,row.LocY ,row.DesserteBus ===1,row.DesserteTrain===1,row.DesserteTram===1,row.InstalParticuliere,row.AccessibleHandicapés===1,row.NbplaceParking,row.NbplaceParkingHandicapés));
             });
 
             return instal;
@@ -55,7 +55,7 @@ class InstallationDao {
         return this.common.findAll(sqlRequest,sqlParams).then(rows => {
             let instal = [];
             rows.forEach(function (row) {
-                instal.push(new Installation(row.NumInstallation,row.NomInstallation ,row.CodeINSEE ,row.CodeDepartement ,row.CodePostal ,row.NomDepartement ,row.NomCommune ,row.Adresse ,row.LocX ,row.LocY ,row.DesserteBus ===1,row.DesserteTrain===1,row.DesserteTram===1,row.InstalParticuliere===1,row.AccessibleHandicapés===1,row.NbplaceParking,row.NbplaceParkingHandicapés));
+                instal.push(new Installation(row.NumInstallation,row.NomInstallation ,row.CodeINSEE ,row.CodeDepartement ,row.CodePostal ,row.NomDepartement ,row.NomCommune ,row.Adresse ,row.LocX ,row.LocY ,row.DesserteBus ===1,row.DesserteTrain===1,row.DesserteTram===1,row.InstalParticuliere,row.AccessibleHandicapés===1,row.NbplaceParking,row.NbplaceParkingHandicapés));
             });
 
             return instal;
@@ -68,7 +68,7 @@ class InstallationDao {
         return this.common.findOne(sqlRequest,sqlParams).then(row => {
 
 
-            return(new Installation(row.NumInstallation,row.NomInstallation ,row.CodeINSEE ,row.CodeDepartement ,row.CodePostal ,row.NomDepartement ,row.NomCommune ,row.Adresse ,row.LocX ,row.LocY ,row.DesserteBus ===1,row.DesserteTrain===1,row.DesserteTram===1,row.InstalParticuliere===1,row.AccessibleHandicapés===1,row.NbplaceParking,row.NbplaceParkingHandicapés));
+            return(new Installation(row.NumInstallation,row.NomInstallation ,row.CodeINSEE ,row.CodeDepartement ,row.CodePostal ,row.NomDepartement ,row.NomCommune ,row.Adresse ,row.LocX ,row.LocY ,row.DesserteBus ===1,row.DesserteTrain===1,row.DesserteTram===1,row.InstalParticuliere,row.AccessibleHandicapés===1,row.NbplaceParking,row.NbplaceParkingHandicapés));
 
         });
     }
