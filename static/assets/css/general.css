@@ -65,14 +65,15 @@ option{
     height: 70px;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 #activitesBox{
     width: 100%;
-    height: 700px;
+    height: 500px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .btMenu{
@@ -114,6 +115,8 @@ select{
     width: 40%;
     flex-direction: column;
     margin-top: 5px;
+    padding: 50px;
+    padding-top: 0;
 }
 
 #leftContainer{
@@ -123,6 +126,8 @@ select{
     height: 100%;
     flex-direction: column;
     margin-top: 10px;
+    padding: 50px;
+    padding-top: 0;
 }
 
 .txtActivity{
@@ -187,6 +192,7 @@ li a{
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding-bottom: 100px;
 }
 
 #detailsDiv{
