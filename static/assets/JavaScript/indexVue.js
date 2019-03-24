@@ -230,6 +230,22 @@ function openInstallationDetails(received) {
         success: function (data) { //si réussite
             coord = [];
             coord[0] = [2];
+            $.each(data, function (index, attrib) {
+                console.log(attrib);
+                if (attrib === true) {
+                    data[index] = "Oui";
+                    console.log("test 1 = " + attrib);
+
+
+                }
+                if (attrib === false) {
+                    data[index] = "Non";
+
+                    console.log("test 2 = " + attrib);
+
+                }
+            });
+
             $("#detailsInfos").append('<li class="leftLi"><b> Nom de l\'installation : </b>' + data.nomInstallation + '</li>');
             $("#detailsInfos").append('<li class="leftLi"><b> Numéro de l\'installation : </b>' + data.numInstallation + '</li>');
             $("#detailsInfos").append('<li class="leftLi"><b> Code du département : </b>' + data.codeDepartement + '</li>');
@@ -302,53 +318,69 @@ function displayEquipmentInfos(received) {
         success: function(data) { //si réussite
             $.each(data, function(index, element) {
                 if (index==numEquipement){
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Equipement : </b>' + element.equipement + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Numéro d\'équipement : </b>' + element.numequipement + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Typeequipement : </b>' + element.typeequipement + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Proprietaire : </b>' + element.proprietaire + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Gestionnaire : </b>' + element.gestionnaire + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Eclairage : </b>' + element.eclairage + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Salle polyvalente : </b>' + element.sallepolyvalente + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Etablissement sportif en plein air : </b>' + element.etabPleinAir + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Etablissement sportif couvert : </b>' + element.etabSportifCouvert + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de places en tribunes : </b>' + element.nbplaceTribune + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Type du sol : </b>' + element.typedusol + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Longueur de l\'aire d\'évolution : </b>' + element.aireEvolLongueur + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Largeur de l\'aire d\'évolution : </b>' + element.aireEvolLargeur + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de couloirs : </b>' + element.nbCouloir + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de vestiaires sportifs : </b>' + element.nbVerstiaireStortif + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient une/des sono fixes : </b>' + element.sonoFixe + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des tableau(x) fixe : </b>' + element.tableauFixe + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des chronométrage(s) : </b>' + element.chronometrage + '</li>');
-                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des sanitaires publics : </b>' + element.sanitairePublic + '</li>');
-                    if(element.acHandMobiAireEvol)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux aires d\'évolution : </b>' + element.acHandMobiAireEvol + '</li>');
-                    if(element.acHandMobiVestiaire)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux vestiaires : </b>' + element.acHandMobiVestiaire + '</li>');
-                    if(element.acHandMobiSanitairePublic)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux sanitaires publics : </b>' + element.acHandMobiSanitairePublic + '</li>');
-                    if(element.acHandMobiSanitaireSportif)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux sanitaires stportifs : </b>' + element.acHandMobiSanitaireSportif + '</li>');
-                    if(element.accueilSalledeReunion)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de salle de Reunion : </b>' + element.accueilSalledeReunion + '</li>');
-                    if(element.accueilBuvette)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de buvette : </b>' + element.accueilBuvette + '</li>');
-                    if(element.accueilInfirmerie)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil d\'infirmerie : </b>' + element.accueilInfirmerie + '</li>');
-                    if(element.accueilReception)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de Reception : </b>' + element.accueilReception + '</li>');
-                    if(element.accueilLocalRangement)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Acceuil/local de rangement : </b>' + element.accueilLocalRangement + '</li>');
-                    if(element.nbcouloirEscalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de couloirs d\'escalade : </b>' + element.nbcouloirEscalade + '</li>');
-                    if(element.hauteurescalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Hauteur mur(s) d\'escalade : </b>' + element.hauteurescalade + '</li>');
-                    if(element.surfaceescalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de surfaces d\'escalade : </b>' + element.surfaceescalade + '</li>');
-                    if(element.nbairesdesaut)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut : </b>' + element.nbairesdesaut + '</li>');
-                    if(element.nbairesauthauteur)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut en hauteur : </b>' + element.nbairesauthauteur + '</li>');
-                    if(element.nbairessautlongueur)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut en longeur : </b>' + element.nbairessautlongueur + '</li>');
-                    if(element.nbairessautlongueurettriplesaut)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut en longueur/triple saut : </b>' + element.nbairessautlongueurettriplesaut + '</li>');
-                    if(element.nbairessautsautoirperche)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut à la perche : </b>' + element.nbairessautsautoirperche + '</li>');
-                    if(element.nbaireslancer)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer : </b>' + element.nbaireslancer + '</li>');
-                    if(element.nbairespoid)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer de poinds : </b>' + element.nbairespoid + '</li>');
-                    if(element.nbairesdisque)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer de disques : </b>' + element.nbairesdisque + '</li>');
-                    if(element.nbairesjavelot)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer de javelot : </b>' + element.nbairesjavelot + '</li>');
-                    if(element.nombreairesmarteau)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer de marteaux : </b>' + element.nombreairesmarteau + '</li>');
-                    if(element.nombreaireslancermixtedisquemarteau)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Dombre d\'aires de lancer de disques/marteaux : </b>' + element.nombreaireslancermixtedisquemarteau + '</li>');
-                    if(element.longueurbassin)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Longeur du bassin : </b>' + element.longueurbassin + '</li>');
-                    if(element.largeurbassin)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Largeur du bassin : </b>' + element.largeurbassin + '</li>');
-                    if(element.profondeurmini)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Profondeurminimale : </b>' + element.profondeurmini + '</li>');
-                    if(element.profondeurmaxi)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Profondeur maximale : </b>' + element.profondeurmaxi + '</li>');
-                    if(element.nbtotaltremplins)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de tremplins : </b>' + element.nbtotaltremplins + '</li>');
+                    $.each(element, function (index, attrib){
+                        console.log(attrib);
+                        if (attrib === true){
+                            element[index] = "Oui";
+                            console.log("test 1 = "+attrib);
+
+
+                        }
+                        if (attrib === false ){
+                            element[index] = "Non";
+
+                            console.log("test 2 = "+attrib);
+
+                        }
+                    });
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Equipement:</b>' + element.equipement + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Numéro d\'équipement:</b>' + element.numequipement + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Typeequipement:</b>' + element.typeequipement + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Proprietaire:</b>' + element.proprietaire + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Gestionnaire:</b>' + element.gestionnaire + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Eclairage:</b>' + element.eclairage + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Salle polyvalente:</b>' + element.sallepolyvalente + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Etablissement sportif en plein air:</b>' + element.etabPleinAir + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Etablissement sportif couvert:</b>' + element.etabSportifCouvert + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de places en tribunes:</b>' + element.nbplaceTribune + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Type du sol:</b>' + element.typedusol + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Longueur de l\'aire d\'évolution:</b>' + element.aireEvolLongueur + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Largeur de l\'aire d\'évolution:</b>' + element.aireEvolLargeur + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de couloirs:</b>' + element.nbCouloir + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de vestiaires sportifs:</b>' + element.nbVerstiaireStortif + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient une/des sono fixes:</b>' + element.sonoFixe + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des tableau(x) fixe:</b>' + element.tableauFixe + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des chronométrage(s):</b>' + element.chronometrage + '</li>');
+                    $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des sanitaires publics: </b>' + element.sanitairePublic + '</li>');
+                    if(element.acHandMobiAireEvol === "Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux aires d\'évolution: </b>' + element.acHandMobiAireEvol + '</li>');
+                    if(element.acHandMobiVestiaire === "Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux vestiaires:</b>' + element.acHandMobiVestiaire + '</li>');
+                    if(element.acHandMobiSanitairePublic ==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux sanitaires publics:</b>' + element.acHandMobiSanitairePublic + '</li>');
+                    if(element.acHandMobiSanitaireSportif==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux sanitaires stportifs:</b>' + element.acHandMobiSanitaireSportif + '</li>');
+                    if(element.accueilSalledeReunion==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de salle de Reunion:</b>' + element.accueilSalledeReunion + '</li>');
+                    if(element.accueilBuvette==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de buvette:</b>' + element.accueilBuvette + '</li>');
+                    if(element.accueilInfirmerie==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil d\'infirmerie:</b>' + element.accueilInfirmerie + '</li>');
+                    if(element.accueilReception==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de Reception:</b>' + element.accueilReception + '</li>');
+                    if(element.accueilLocalRangement==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Acceuil/local de rangement:</b>' + element.accueilLocalRangement + '</li>');
+                    if(element.nbcouloirEscalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de couloirs d\'escalade:</b>' + element.nbcouloirEscalade + '</li>');
+                    if(element.hauteurescalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Hauteur mur(s) d\'escalade:</b>' + element.hauteurescalade + '</li>');
+                    if(element.surfaceescalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de surfaces d\'escalade:</b>' + element.surfaceescalade + '</li>');
+                    if(element.nbairesdesaut)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut:</b>' + element.nbairesdesaut + '</li>');
+                    if(element.nbairesauthauteur)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut en hauteur:</b>' + element.nbairesauthauteur + '</li>');
+                    if(element.nbairessautlongueur)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut en longeur:</b>' + element.nbairessautlongueur + '</li>');
+                    if(element.nbairessautlongueurettriplesaut)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut en longueur/triple saut:</b>' + element.nbairessautlongueurettriplesaut + '</li>');
+                    if(element.nbairessautsautoirperche)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de saut à la perche:</b>' + element.nbairessautsautoirperche + '</li>');
+                    if(element.nbaireslancer)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer:</b>' + element.nbaireslancer + '</li>');
+                    if(element.nbairespoid)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer de poinds:</b>' + element.nbairespoid + '</li>');
+                    if(element.nbairesdisque)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer de disques:</b>' + element.nbairesdisque + '</li>');
+                    if(element.nbairesjavelot)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer de javelot:</b>' + element.nbairesjavelot + '</li>');
+                    if(element.nombreairesmarteau)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre d\'aires de lancer de marteaux:</b>' + element.nombreairesmarteau + '</li>');
+                    if(element.nombreaireslancermixtedisquemarteau)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Dombre d\'aires de lancer de disques/marteaux:</b>' + element.nombreaireslancermixtedisquemarteau + '</li>');
+                    if(element.longueurbassin)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Longeur du bassin:</b>' + element.longueurbassin + '</li>');
+                    if(element.largeurbassin)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Largeur du bassin:</b>' + element.largeurbassin + '</li>');
+                    if(element.profondeurmini)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Profondeurminimale:</b>' + element.profondeurmini + '</li>');
+                    if(element.profondeurmaxi)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Profondeur maximale:</b>' + element.profondeurmaxi + '</li>');
+                    if(element.nbtotaltremplins)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de tremplins:</b>' + element.nbtotaltremplins + '</li>');
+
                 }
             });
         },
@@ -442,6 +474,22 @@ function displayActivityInfos(received){
         success: function(element) { //si réussite
                 numDeInstallation = element.numInstallation;
                 //ajout détails de l'installation
+
+                $.each(element, function (index, attrib){
+                    console.log(attrib);
+                    if (attrib === true){
+                        element[index] = "Oui";
+                        console.log("test 1 = "+attrib);
+
+
+                    }
+                    if (attrib === false ){
+                        element[index] = "Non";
+
+                        console.log("test 2 = "+attrib);
+
+                    }
+                });
                 $("#detailsInfosEquipment").append('<li class="rightLi"><b>Equipement:</b>' + element.equipement + '</li>');
                 $("#detailsInfosEquipment").append('<li class="rightLi"><b>Numéro d\'équipement:</b>' + element.numequipement + '</li>');
                 $("#detailsInfosEquipment").append('<li class="rightLi"><b>Typeequipement:</b>' + element.typeequipement + '</li>');
@@ -461,15 +509,15 @@ function displayActivityInfos(received){
                 $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des tableau(x) fixe:</b>' + element.tableauFixe + '</li>');
                 $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des chronométrage(s):</b>' + element.chronometrage + '</li>');
                 $("#detailsInfosEquipment").append('<li class="rightLi"><b>Contient un/des sanitaires publics: </b>' + element.sanitairePublic + '</li>');
-                if(element.acHandMobiAireEvol)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux aires d\'évolution: </b>' + element.acHandMobiAireEvol + '</li>');
-                if(element.acHandMobiVestiaire)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux vestiaires:</b>' + element.acHandMobiVestiaire + '</li>');
-                if(element.acHandMobiSanitairePublic)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux sanitaires publics:</b>' + element.acHandMobiSanitairePublic + '</li>');
-                if(element.acHandMobiSanitaireSportif)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux sanitaires stportifs:</b>' + element.acHandMobiSanitaireSportif + '</li>');
-                if(element.accueilSalledeReunion)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de salle de Reunion:</b>' + element.accueilSalledeReunion + '</li>');
-                if(element.accueilBuvette)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de buvette:</b>' + element.accueilBuvette + '</li>');
-                if(element.accueilInfirmerie)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil d\'infirmerie:</b>' + element.accueilInfirmerie + '</li>');
-                if(element.accueilReception)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de Reception:</b>' + element.accueilReception + '</li>');
-                if(element.accueilLocalRangement)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Acceuil/local de rangement:</b>' + element.accueilLocalRangement + '</li>');
+                if(element.acHandMobiAireEvol === "Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux aires d\'évolution: </b>' + element.acHandMobiAireEvol + '</li>');
+                if(element.acHandMobiVestiaire === "Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux vestiaires:</b>' + element.acHandMobiVestiaire + '</li>');
+                if(element.acHandMobiSanitairePublic ==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux sanitaires publics:</b>' + element.acHandMobiSanitairePublic + '</li>');
+                if(element.acHandMobiSanitaireSportif==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accès pour handicapés aux sanitaires stportifs:</b>' + element.acHandMobiSanitaireSportif + '</li>');
+                if(element.accueilSalledeReunion==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de salle de Reunion:</b>' + element.accueilSalledeReunion + '</li>');
+                if(element.accueilBuvette==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de buvette:</b>' + element.accueilBuvette + '</li>');
+                if(element.accueilInfirmerie==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil d\'infirmerie:</b>' + element.accueilInfirmerie + '</li>');
+                if(element.accueilReception==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Accueil de Reception:</b>' + element.accueilReception + '</li>');
+                if(element.accueilLocalRangement==="Oui")$("#detailsInfosEquipment").append('<li class="rightLi"><b>Acceuil/local de rangement:</b>' + element.accueilLocalRangement + '</li>');
                 if(element.nbcouloirEscalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de couloirs d\'escalade:</b>' + element.nbcouloirEscalade + '</li>');
                 if(element.hauteurescalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Hauteur mur(s) d\'escalade:</b>' + element.hauteurescalade + '</li>');
                 if(element.surfaceescalade)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de surfaces d\'escalade:</b>' + element.surfaceescalade + '</li>');
@@ -506,6 +554,21 @@ function displayActivityInfos(received){
 
                         coord = [];
                         let tab = [];
+                        $.each(data, function (index, attrib){
+                            console.log(attrib);
+                            if (attrib === true){
+                                data[index] = "Oui";
+                                console.log("test 1 = "+attrib);
+
+
+                            }
+                            if (attrib === false ){
+                                data[index] = "Non";
+
+                                console.log("test 2 = "+attrib);
+
+                            }
+                        });
                         $("#detailsInfos").empty();
                         $("#detailsInfos").append('<li class="leftLi"><b> Nom de l\'installation: </b>'+data.nomInstallation+'</li>');
                         $("#detailsInfos").append('<li class="leftLi"><b> Numéro de l\'installation: </b>'+data.numInstallation+'</li>');
@@ -523,17 +586,17 @@ function displayActivityInfos(received){
                         tab[1] =data.locY;
                         coord[0] = tab;
 
-                        if (macarte == null) {
+                       /* if (macarte == null) {
                             initMap();
-                        }
+                        }*/
 
-                        for( let i = 0; i < coord.length; i++ ){
+                       /* for( let i = 0; i < coord.length; i++ ){
                             marqueur.push(L.marker([coord[i][0], coord[i][1]]).bindPopup(data.nomInstallation).addTo(macarte));
                         }
-                        console.log('ici2'+data.nomInstallation);
+                        console.log('ici2'+data.nomInstallation);*/
 
                         $("#detailsDiv").show(500);
-                        $("#googleMap").show(500);
+                      //  $("#googleMap").show(500);
 
 
                     },
