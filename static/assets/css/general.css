@@ -1,5 +1,6 @@
 html {
     scroll-behavior: smooth;
+    font-family: "Montsera", sans-serif;
 }
 
 body {
@@ -129,11 +130,15 @@ select{
 .rightLi{
     width: 100%;
     height: 30px;
+    font-size: 13px;
+    margin-bottom: 5px
 }
 
 .leftLi{
     width: 100%;
     height: 30px;
+    font-size: 15px;
+    margin-bottom: 20px
 }
 
 
