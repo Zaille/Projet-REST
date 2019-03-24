@@ -216,4 +216,7 @@ h3{
     .arrangeDetails{
         width: 100%;
     }
+    .scrollers{
+        max-height: 500px;
+    }
 }

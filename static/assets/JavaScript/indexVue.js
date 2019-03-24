@@ -102,7 +102,7 @@ $(document).ready(function() {
         });
         $("#leftContainer").show(500);
         $("#rightContainer").hide(500);
-        $("#detailsDiv").show(500);    });
+          });
 
     $('#activitiesSelect').on('change', function() {   //selection d'un département
         $("#rightList").empty();
