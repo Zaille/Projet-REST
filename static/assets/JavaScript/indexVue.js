@@ -122,7 +122,6 @@ $(document).ready(function() {
             complete : function(resultat, statut){      // permet de synchroniser les données lues
                 let i =0;
                 while (numEquipement[i] !==undefined) {
-                        console.log(numEquipement[i]);
                         $.ajax({
                             url: 'http://127.0.0.1:3000/api/equipement/'+numEquipement[i], //on prépare l'envoi
                             type: 'GET',
@@ -480,8 +479,6 @@ function fillSelects(){     //gère l'insertion des villes et départements dans
 function displayActivityInfos(received){
     $("#detailsInfosEquipment").empty();
     let num = $(received).parents("li").index();
-
-    console.log('ici1= '+numEquipement[num]);
     $.ajax({
         url: 'http://127.0.0.1:3000/api/equipement/'+numEquipement[num], //on prépare l'envoi
         type: 'GET',
@@ -609,7 +606,6 @@ function displayActivityInfos(received){
                         for( let i = 0; i < coord.length; i++ ){
                             marqueur.push(L.marker([coord[i][0], coord[i][1]]).bindPopup(data.nomInstallation).addTo(macarte));
                         }
-                        console.log('ici2'+data.nomInstallation);
 
                         $("#detailsDiv").show(500);
                         $("#googleMap").show(500);
