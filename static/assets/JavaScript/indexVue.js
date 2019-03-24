@@ -1,10 +1,10 @@
 //https://nouvelle-techno.fr/actualites/2018/05/11/pas-a-pas-inserer-une-carte-openstreetmap-sur-votre-site
-let lat;
-let lon;
+let coord = [];
 let macarte = null;
-let marqueur=null;
 let codePostaux = new Object();
 let codeInstallations = [];
+let nomInstallation = [];
+let marqueur = [];
 let idInstallation;
 let numActivite = new Object();
 let numEquipement = new Object();
@@ -45,44 +45,74 @@ $(document).ready(function() {
 
     //ECOUTEUR POUR DES SELECT
     $('#departementsSelect').on('change', function() {   //selection d'un département
-        $partieGauche = $("#leftContainer");
+
         $("#leftList").empty();
+
+        if (marqueur[0]) {
+            for( let i = 0; i < marqueur.length; i++  ){
+                macarte.removeLayer(marqueur[i]);
+            }
+            marqueur = [];
+        }
+
         let selected = codePostaux[$('#departementsSelect').find(":selected").val()]; //on récupère le département séléctionné
+
         // REQUETE LISTE ACTIVITES PAR département
         $.ajax({
-            url: 'http://127.0.0.1:3000/api/installation/departement/'+selected, //on prépare l'envoi
+            url: 'http://127.0.0.1:3000/api/installation/departement/' + selected, //on prépare l'envoi
             type: 'GET',
             dataType: 'json',
             data: '', //on créer les parametres d'url
-            success: function(data) { //si réussite
-                $.each(data, function(index, element) { //on parcourstout les élements du tableau
+            success: function (data) { //si réussite
+                nomInstallation = [];
+                codeInstallation = [];
+                coord = [];
+                $.each(data, function (index, element) { //on parcourstout les élements du tableau
                     codeInstallations[index] = element.numInstallation;
+                    coord[index] = [2];
                     let adresse;
-                    if (element.adresse == "null"){
-                        adresse= 'Non communiqué';
-                    }else {
-                        adresse= element.adresse;
+                    if (element.adresse == "null") {
+                        adresse = 'Non communiqué';
+                    } else {
+                        adresse = element.adresse;
                     }
-                    $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#"  onclick="openInstallationDetails(this)"  style="text-decoration: none; font-size: 23px; color:#404040fa" > '  +"<b>"+element.nomInstallation+"</b>"+" - "+ element.nomCommune+", "+ adresse+ '</a></li>');
+                    $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#"  onclick="openInstallationDetails(this)"  style="text-decoration: none; font-size: 23px; color:#404040fa" > ' + "<b>" + element.nomInstallation + "</b>" + " - " + element.nomCommune + ", " + adresse + '</a></li>');
+                    nomInstallation[index] = element.nomInstallation;
+                    coord[index][0] = element.locX;
+                    coord[index][1] = element.locY;
                 });
+
+                if (macarte == null) {
+                    initMap();
+                }
+
+                for( let i = 0; i < coord.length; i++ ){
+                    marqueur.push(L.marker([coord[i][0], coord[i][1]]).bindPopup(nomInstallation[i]).addTo(macarte));
+                }
+
+                $("#googleMap").show(500);
             },
-            error : function(resultat, statut, erreur){ console.log(erreur); },
-            complete : function(resultat, statut){}
+            error: function (resultat, statut, erreur) {
+                console.log(erreur);
+            },
+            complete: function (resultat, statut) {
+            }
         });
-        $partieGauche.show(500);
-    });
+        $("#leftContainer").show(500);
+        $("#rightContainer").hide(500);
+        $("#detailsDiv").show(500);    });
 
     $('#activitiesSelect').on('change', function() {   //selection d'un département
         $("#rightList").empty();
         numEquipement = new Object();
         let idSelected = numActivite[$('#activitiesSelect').find(":selected").val()]; //football
         $.ajax({
-            url: 'http://127.0.0.1:3000/api/activite/id/'+idSelected, //on prépare l'envoi
+            url: 'http://127.0.0.1:3000/api/activite/id/' + idSelected, //on prépare l'envoi
             type: 'GET',
             dataType: 'json',
             data: '',
-            success: function(data) { //si réussite
-                $.each(data, function(index, element) { //on parcourstout les élements du tableau
+            success: function (data) { //si réussite
+                $.each(data, function (index, element) { //on parcourstout les élements du tableau
                     numEquipement[index] = element.numerodelaficheequipement;
                 });
             },
@@ -110,127 +140,165 @@ $(document).ready(function() {
                 }
         });
     });
-    $('#villesSelect').on('change', function() {   //selection d'une ville
-        $partieGauche = $("#leftContainer");
+
+    $('#villesSelect').on('change', function () {   //selection d'une ville
+
         $("#leftList").empty();
+
         let selected = $('#villesSelect').find(":selected").text(); //on récupère le département séléctionné
-        // REQUETE LISTE ACTIVITES PAR VILLE
+
+        //TODO REQUETE LISTE ACTIVITES PAR VILLE
         $.ajax({
-            url: 'http://127.0.0.1:3000/api/installation/ville/'+selected, //on prépare l'envoi
+            url: 'http://127.0.0.1:3000/api/installation/ville/' + selected, //on prépare l'envoi
             type: 'GET',
             dataType: 'json',
             data: '',
-            success: function(data) { //si réussite
-                $.each(data, function(index, element) { //on parcourstout les élements du tableau
+            success: function (data) { //si réussite
+                nomInstallation = [];
+                codeInstallation = [];
+                coord = [];
+                $.each(data, function (index, element) { //on parcourstout les élements du tableau
                     codeInstallations[index] = element.numInstallation;
+                    coord[index] = [2];
                     let adresse;
-                    if (element.adresse == null){
-                        adresse= 'Non communiqué';
-                    }else {
-                        adresse= element.adresse;
+                    if (element.adresse == null) {
+                        adresse = 'Non communiqué';
+                    } else {
+                        adresse = element.adresse;
                     }
-                    $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#" onclick="openInstallationDetails(this)"  style="text-decoration: none; font-size: 23px; color:#404040fa" > '  +"<b>"+element.nomInstallation+"</b>"+" - "+ element.nomCommune+", "+adresse+ '</a></li>');
+                    $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#" onclick="openInstallationDetails(this)"  style="text-decoration: none; font-size: 23px; color:#404040fa" > ' + "<b>" + element.nomInstallation + "</b>" + " - " + element.nomCommune + ", " + adresse + '</a></li>');
+                    nomInstallation[index] = element.nomInstallation;
+                    coord[index][0] = element.locX;
+                    coord[index][1] = element.locY;
                 });
+
+                if (macarte == null) {
+                    initMap();
+                }
+
+                if (marqueur[0]) {
+                    for( let i = 0; i < marqueur.length; i++  ){
+                        macarte.removeLayer(marqueur[i]);
+                    }
+                    marqueur = [];
+                }
+
+                for( let i = 0; i < coord.length; i++ ){
+                    marqueur.push(L.marker([coord[i][0], coord[i][1]]).bindPopup(nomInstallation[i]).addTo(macarte));
+                }
+
+                $("#googleMap").show(500);
             },
-            error : function(resultat, statut, erreur){ console.log(erreur); },
-            complete : function(resultat, statut){}
+            error: function (resultat, statut, erreur) {
+                console.log(erreur);
+            },
+            complete: function (resultat, statut) {
+            }
         });
-        $partieGauche.show(500);
+        $("#leftContainer").show(500);
+        $("#rightContainer").hide(500);
+        $("#detailsDiv").show(500);
     });
 
 });
 
 //INITIALISATION DE LA CARTE
 function initMap() {
+
     // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-    macarte = L.map('map').setView([lat, lon], 11);
+    macarte = L.map('map').setView([coord[0][0], coord[0][1]], 11);
     // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         // Il est toujours bien de laisser le lien vers la source des données
         minZoom: 1,
         maxZoom: 20
     }).addTo(macarte);
+
 }
 
 //ON AFFICHE LES DETAILS DE L'INSTALLATION SELECTIONNEE
 function openInstallationDetails(received) {
-    $("#detailsDiv").show(500);
     let liClicked = $(received).parents("li").index();
     $("#rightList").empty();
     $("#detailsInfos").empty();
-    $partieDroite = $("#rightContainer");
-    $partieDroite.show(500);
+    $("#rightContainer").show(500);
     idInstallation = codeInstallations[liClicked];
     // REQUETE DETAILS DUNE INSTALLATION
     $.ajax({
-        url: 'http://127.0.0.1:3000/api/installation/id/'+idInstallation, //on prépare l'envoi
+        url: 'http://127.0.0.1:3000/api/installation/id/' + idInstallation, //on prépare l'envoi
         type: 'GET',
         dataType: 'json',
         data: '', //on créer les parametres d'url
-        success: function(data) { //si réussite
-            $("#detailsInfos").append('<li class="leftLi"><b> Nom de l\'installation: </b>'+data.nomInstallation+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Numéro de l\'installation: </b>'+data.numInstallation+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Code du département: </b>'+data.codeDepartement+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Nom du département: </b>'+data.nomDepartement+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Nom de la commune: </b>'+data.nomCommune+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Adresse: </b>'+data.adresse+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Bus à proximité: </b>'+data.desserteBus+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Trains à proximité: </b>'+data.desserteTrain+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Possède des installations particulières: </b>'+data.instalParticuliere+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Accessible aux handicapés:</b> '+data.accessibleHandicapes+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Nombre de place sur le parking: </b>'+data.nbplaceParking+'</li>');
-            $("#detailsInfos").append('<li class="leftLi"><b> Nombre de places pour handicapés sur le parking:</b> '+data.nbplaceParkingHandicapes+'</li>');
-            lat = data.locX;
-            lon = data.locY;
-            if (macarte == null){
-                initMap();
-            }
-            if (marqueur){
-                macarte.removeLayer(marqueur);
-            }
-            marqueur = L.marker([lat, lon]).addTo(macarte);
-            $map = $("#googleMap");
-            $map.show(500);
+        success: function (data) { //si réussite
+            coord = [];
+            coord[0] = [2];
+            $("#detailsInfos").append('<li class="leftLi"><b> Nom de l\'installation: </b>' + data.nomInstallation + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Numéro de l\'installation: </b>' + data.numInstallation + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Code du département: </b>' + data.codeDepartement + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Nom du département: </b>' + data.nomDepartement + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Nom de la commune: </b>' + data.nomCommune + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Adresse: </b>' + data.adresse + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Bus à proximité: </b>' + data.desserteBus + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Trains à proximité: </b>' + data.desserteTrain + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Possède des installations particulières: </b>' + data.instalParticuliere + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Accessible aux handicapés:</b> ' + data.accessibleHandicapes + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Nombre de place sur le parking: </b>' + data.nbplaceParking + '</li>');
+            $("#detailsInfos").append('<li class="leftLi"><b> Nombre de places pour handicapés sur le parking:</b> ' + data.nbplaceParkingHandicapes + '</li>');
+            coord[0][0] = data.locX;
+            coord[0][1] = data.locY;
 
+            if( marqueur[0] ){
+                for( let i = 0; i < marqueur.length; i++  ){
+                    macarte.removeLayer(marqueur[i]);
+                }
+                marqueur = [];
+            }
+
+            marqueur.push(L.marker([coord[0][0], coord[0][1]]).bindPopup(data.nomInstallation).addTo(macarte));
         },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){}
+        error: function (resultat, statut, erreur) {
+            console.log(erreur);
+        },
+        complete: function (resultat, statut) {
+        }
     });
 
     $.ajax({
-        url: 'http://127.0.0.1:3000/api/equipement/installation/'+idInstallation, //on prépare l'envoi
+        url: 'http://127.0.0.1:3000/api/equipement/installation/' + idInstallation, //on prépare l'envoi
         type: 'GET',
         dataType: 'json',
         data: '', //on créer les parametres d'url
-        success: function(data) { //si réussite
-            $.each(data, function(index, element) {
+        success: function (data) { //si réussite
+            $.each(data, function (index, element) {
                 $("#rightList").append('<li class="rightLi"><a href="#" onclick="displayEquipmentInfos(this)" style="text-decoration: none; font-size: 23px; color:#404040fa">' + element.typeequipement + '</a></li>');
             });
         },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){}
+        error: function (resultat, statut, erreur) {
+            console.log(erreur);
+        },
+        complete: function (resultat, statut) {
+        }
     });
 
 
     //COLORATION LORS DUNE SELECTION
     $('#leftList li').click(function() {    //activité selectionnée
         $tailleListe = $("#leftList");
-        $( "#leftList li" ).each(function( index ) {    //refresh couleur vue
+        $("#leftList li").each(function (index) {    //refresh couleur vue
             let $allLi = $("#leftList li").eq(index);
             $allLi.css("background-color", "#00000000");
         });
         $(this).css("background-color", "#25252525");
-        $partieDroite.show(500);
+        $('#rightContainer').show(500);
     });
 }
 
-//AFFICHE LES DETAILS DE LEQUIPEMENT SELECTIONNE
 function displayEquipmentInfos(received) {
     $("#detailsInfosEquipment").empty();
     let numEquipement = $(received).parents("li").index();
 
     $.ajax({
-        url: 'http://127.0.0.1:3000/api/equipement/installation/'+idInstallation, //on prépare l'envoi
+        url: 'http://127.0.0.1:3000/api/equipement/installation/' + idInstallation, //on prépare l'envoi
         type: 'GET',
         dataType: 'json',
         data: '',
@@ -287,8 +355,11 @@ function displayEquipmentInfos(received) {
                 }
             });
         },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){}
+        error: function (resultat, statut, erreur) {
+            console.log(erreur);
+        },
+        complete: function (resultat, statut) {
+        }
     });
 
     $('#rightList li').click(function() {    //activité selectionnée
@@ -298,7 +369,7 @@ function displayEquipmentInfos(received) {
             $allLi.css("background-color", "#00000000");
         });
         $(this).css("background-color", "#25252525");
-        $partieDroite.show(500);
+        $('#rightContainer').show(500);
     });
 }
 
@@ -309,14 +380,17 @@ function fillSelects(){     //gère l'insertion des villes et départements dans
         type: 'GET',
         dataType: 'json',
         data: '', //on créer les parametres d'url
-        success: function(data) { //si réussite
-            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
+        success: function (data) { //si réussite
+            $.each(data, function (index, element) { //on parcourt tout les élements du tableau
                 $("#departementsSelect").append(new Option(element.NomDepartement, element.codeDepartement));
                 codePostaux[element.NomDepartement] = element.CodeDepartement;
             });
         },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){}
+        error: function (resultat, statut, erreur) {
+            console.log(erreur);
+        },
+        complete: function (resultat, statut) {
+        }
     });
 
 
@@ -325,13 +399,16 @@ function fillSelects(){     //gère l'insertion des villes et départements dans
         type: 'GET',
         dataType: 'json',
         data: '', //on créer les parametres d'url
-        success: function(data) { //si réussite
-            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
+        success: function (data) { //si réussite
+            $.each(data, function (index, element) { //on parcourt tout les élements du tableau
                 $("#villesSelect").append(new Option(element.NomCommune, element.NomCommune));
             });
         },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){}
+        error: function (resultat, statut, erreur) {
+            console.log(erreur);
+        },
+        complete: function (resultat, statut) {
+        }
     });
 
     $.ajax({
@@ -339,14 +416,17 @@ function fillSelects(){     //gère l'insertion des villes et départements dans
         type: 'GET',
         dataType: 'json',
         data: '', //on créer les parametres d'url
-        success: function(data) { //si réussite
-            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
+        success: function (data) { //si réussite
+            $.each(data, function (index, element) { //on parcourt tout les élements du tableau
                 $("#activitiesSelect").append(new Option(element.Activitelibelle, element.Activitelibelle));
                 numActivite[element.Activitelibelle] = element.Activitecode;
             });
         },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){}
+        error: function (resultat, statut, erreur) {
+            console.log(erreur);
+        },
+        complete: function (resultat, statut) {
+        }
     });
 
 
@@ -354,7 +434,6 @@ function fillSelects(){     //gère l'insertion des villes et départements dans
 
 function displayActivityInfos(received){
     $("#detailsInfosEquipment").empty();
-    $("#detailsDiv").show(500);
     let num = $(received).parents("li").index();
 
     $.ajax({
@@ -423,7 +502,20 @@ function displayActivityInfos(received){
                 dataType: 'json',
                 data: '', //on créer les parametres d'url
                 success: function(data) { //si réussite
+
+                    if (marqueur[0]){
+                        for( let i = 0; i < marqueur.length; i++  ){
+                            macarte.removeLayer(marqueur[i]);
+                        }
+                        marqueur = [];
+                    }
+
+                    coord = [];
+
                     $.each(data, function(index, element) { //on parcourt tout les élements du tableau
+
+                        coord[index] = [2];
+
                         $("#detailsInfos").empty();
                         $("#detailsInfos").append('<li class="leftLi"><b> Nom de l\'installation: </b>'+data.nomInstallation+'</li>');
                         $("#detailsInfos").append('<li class="leftLi"><b> Numéro de l\'installation: </b>'+data.numInstallation+'</li>');
@@ -437,20 +529,14 @@ function displayActivityInfos(received){
                         $("#detailsInfos").append('<li class="leftLi"><b> Accessible aux handicapés:</b> '+data.accessibleHandicapes+'</li>');
                         $("#detailsInfos").append('<li class="leftLi"><b> Nombre de place sur le parking: </b>'+data.nbplaceParking+'</li>');
                         $("#detailsInfos").append('<li class="leftLi"><b> Nombre de places pour handicapés sur le parking:</b> '+data.nbplaceParkingHandicapes+'</li>');
-
-                        lat = data.locX;
-                        lon = data.locY;
-                        if (macarte == null){
-                            initMap();
-                        }
-                        if (marqueur){
-                            macarte.removeLayer(marqueur);
-                        }
-                        marqueur = L.marker([lat, lon]).addTo(macarte);
-                        $map = $("#googleMap");
-                        $map.show(500);
-
+                        coord[index][0] = data.locX;
+                        coord[index][1] = data.locY;
                     });
+
+                    for( let i = 0; i < coord.length; i++ ){
+                        marqueur.push(L.marker([coord[i][0], coord[i][1]]).bindPopup(nomInstallation[i]).addTo(macarte));
+                    }
+
                 },
                 error : function(resultat, statut, erreur){ console.log(erreur); },
                 complete : function(resultat, statut){}
