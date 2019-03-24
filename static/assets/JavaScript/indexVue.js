@@ -78,7 +78,7 @@ $(document).ready(function() {
                     } else {
                         adresse = element.adresse;
                     }
-                    $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#"  onclick="openInstallationDetails(this)"  style="text-decoration: none; font-size: 20px; color:#404040fa" > ' + "<b>" + element.nomInstallation + "</b>" + " - " + element.nomCommune + ", " + adresse + '</a></li>');
+                    $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#"  onclick="openInstallationDetails(this)"  style="text-decoration: none; font-size: 14px; color:#404040fa" > ' + "<b>" + element.nomInstallation + "</b>" + " - " + element.nomCommune + ", " + adresse + '</a></li>');
                     nomInstallation[index] = element.nomInstallation;
                     coord[index][0] = element.locX;
                     coord[index][1] = element.locY;
@@ -135,7 +135,7 @@ $(document).ready(function() {
                                     dataType: 'json',
                                     data: '', //on créer les parametres d'url
                                     success: function (element) { //si réussite
-                                        $("#rightList").append('<li class="rightLi" id="ListEquipements" style="cursor: pointer" value="'+data.numInstallation +' "><a  href="#"  onclick="displayActivityInfos(this)" style="text-decoration: none; font-size: 20px; color:#404040fa" > <b>'+data.equipement+' : </b>'+element.nomDepartement+ ',' +element.nomCommune+'</li>');
+                                        $("#rightList").append('<li class="rightLi" id="ListEquipements" style="cursor: pointer" value="'+data.numInstallation +' "><a  href="#"  onclick="displayActivityInfos(this)" style="text-decoration: none; font-size: 14px; color:#404040fa" > <b>'+data.equipement+' : </b>'+element.nomDepartement+ ',' +element.nomCommune+'</li>');
 
                                     },
                                     error: function (resultat, statut, erreur) {
@@ -179,7 +179,7 @@ $(document).ready(function() {
                     } else {
                         adresse = element.adresse;
                     }
-                    $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#" onclick="openInstallationDetails(this)"  style="text-decoration: none; font-size: 20px; color:#404040fa" > ' + "<b>" + element.nomInstallation + "</b>" + " - " + element.nomCommune + ", " + adresse + '</a></li>');
+                    $("#leftList").append('<li class="leftLi"  style="cursor: pointer"><a  href="#" onclick="openInstallationDetails(this)"  style="text-decoration: none; font-size: 14px; color:#404040fa" > ' + "<b>" + element.nomInstallation + "</b>" + " - " + element.nomCommune + ", " + adresse + '</a></li>');
                     nomInstallation[index] = element.nomInstallation;
                     coord[index][0] = element.locX;
                     coord[index][1] = element.locY;
@@ -298,7 +298,7 @@ function openInstallationDetails(received) {
         data: '', //on créer les parametres d'url
         success: function (data) { //si réussite
             $.each(data, function (index, element) {
-                $("#rightList").append('<li class="rightLi" ><a href="#" onclick="displayEquipmentInfos(this)" style="text-decoration: none; font-size: 20px; color:#404040fa; padding-left: 20px;">' + element.typeequipement + '</a></li>');
+                $("#rightList").append('<li class="rightLi" ><a href="#" onclick="displayEquipmentInfos(this)" style="text-decoration: none; font-size: 14px; color:#404040fa; padding-left: 20px;">' + element.typeequipement + '</a></li>');
             });
         },
         error: function (resultat, statut, erreur) {
