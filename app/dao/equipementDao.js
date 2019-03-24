@@ -41,8 +41,9 @@ class EquipementDao {
         let sqlRequest = "SELECT * FROM equipement where Numequipement like $id";
         let sqlParams = {$id: id};
 
-        return this.common.one(sqlRequest,sqlParams).then(row => {
+        return this.common.findOne(sqlRequest,sqlParams).then(row => {
 
+            console.log(row);
             return (new Equipement(row.Numequipement,row.Equipement,row.NumInstallation,row.Typeequipement,row.Proprietaire,row.Gestionnaire,row.Eclairage ===1,row.Sallepolyvalente ===1,row.EtabPleinAir===1,row.EtabSportifCouvert===1,row.NbplaceTribune,row.Typedusol,row.AireEvolLongueur,row.AireEvolLargeur,row.NbCouloir,row.NbVerstiaireStortif,row.SonoFixe===1,row.TableauFixe===1,row.Chronometrage===1,row.SanitairePublic===1,row.AcHandMobiAireEvol===1,row.AcHandMobiTribune===1,row.AcHandMobiVestiaire===1,row.AcHandMobiSanitairePublic===1,row.AcHandMobiSanitaireSportif===1,row.AccueilClub === 1,row.AccueilSalledeReunion===1,row.AccueilBuvette===1,row.AccueilInfirmerie===1,row.AccueilReception===1,row.AccueilLocalRangement===1,row.NbcouloirEscalade,row.Hauteurescalade,row.Surfaceescalade,row.Nbairesdesaut,row.Nbairesauthauteur,row.Nbairessautlongueur,row.Nbairessautlongueurettriplesaut,row.Nbairessautsautoirperche,row.Nbaireslancer,row.Nbairespoid,row.Nbairesdisque,row.Nbairesjavelot,row.Nombreairesmarteau,row.Nombreaireslancermixtedisquemarteau,row.Longueurbassin,row.Largeurbassin,row.Profondeurmini,row.Profondeurmaxi,row.Nbtotaltremplins));
 
 

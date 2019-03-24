@@ -119,17 +119,15 @@ $(document).ready(function() {
             error : function(resultat, statut, erreur){ console.log(erreur); },
             complete : function(resultat, statut){      // permet de synchroniser les données lues
                 let i =0;
-                while (numEquipement[i] !=undefined) {
+                while (numEquipement[i] !==undefined) {
+                        console.log(numEquipement[i]);
                         $.ajax({
                             url: 'http://127.0.0.1:3000/api/equipement/'+numEquipement[i], //on prépare l'envoi
                             type: 'GET',
                             dataType: 'json',
                             data: '',
                             success: function(data) { //si réussite
-                                $.each(data, function(index, element) {
-                                    $("#rightList").append('<li class="rightLi" id="ListEquipements" style="cursor: pointer"><a  href="#"  onclick="displayActivityInfos(this)" style="text-decoration: none; font-size: 20px; color:#404040fa" > ' +element.equipement+'</li>');
-                                });
-
+                                $("#rightList").append('<li class="rightLi" id="ListEquipements" style="cursor: pointer" value="'+data.numInstallation +' "><a  href="#"  onclick="displayActivityInfos(this)" style="text-decoration: none; font-size: 20px; color:#404040fa" > ' +data.equipement+'</li>');
                             },
                             error : function(resultat, statut, erreur){ console.log(erreur); },
                             complete : function(resultat, statut){}
@@ -270,7 +268,7 @@ function openInstallationDetails(received) {
         data: '', //on créer les parametres d'url
         success: function (data) { //si réussite
             $.each(data, function (index, element) {
-                $("#rightList").append('<li class="rightLi"><a href="#" onclick="displayEquipmentInfos(this)" style="text-decoration: none; font-size: 20px; color:#404040fa; padding-left: 20px;">' + element.typeequipement + '</a></li>');
+                $("#rightList").append('<li class="rightLi" ><a href="#" onclick="displayEquipmentInfos(this)" style="text-decoration: none; font-size: 20px; color:#404040fa; padding-left: 20px;">' + element.typeequipement + '</a></li>');
             });
         },
         error: function (resultat, statut, erreur) {
@@ -296,7 +294,6 @@ function openInstallationDetails(received) {
 function displayEquipmentInfos(received) {
     $("#detailsInfosEquipment").empty();
     let numEquipement = $(received).parents("li").index();
-
     $.ajax({
         url: 'http://127.0.0.1:3000/api/equipement/installation/' + idInstallation, //on prépare l'envoi
         type: 'GET',
@@ -436,13 +433,13 @@ function displayActivityInfos(received){
     $("#detailsInfosEquipment").empty();
     let num = $(received).parents("li").index();
 
+    console.log('ici1= '+numEquipement[num]);
     $.ajax({
         url: 'http://127.0.0.1:3000/api/equipement/'+numEquipement[num], //on prépare l'envoi
         type: 'GET',
         dataType: 'json',
         data: '', //on créer les parametres d'url
-        success: function(data) { //si réussite
-            $.each(data, function(index, element) { //on parcourt tout les élements du tableau
+        success: function(element) { //si réussite
                 numDeInstallation = element.numInstallation;
                 //ajout détails de l'installation
                 $("#detailsInfosEquipment").append('<li class="rightLi"><b>Equipement:</b>' + element.equipement + '</li>');
@@ -492,30 +489,23 @@ function displayActivityInfos(received){
                 if(element.profondeurmini)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Profondeurminimale:</b>' + element.profondeurmini + '</li>');
                 if(element.profondeurmaxi)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Profondeur maximale:</b>' + element.profondeurmaxi + '</li>');
                 if(element.nbtotaltremplins)$("#detailsInfosEquipment").append('<li class="rightLi"><b>Nombre de tremplins:</b>' + element.nbtotaltremplins + '</li>');
-            });
-        },
-        error : function(resultat, statut, erreur){ console.log(erreur); },
-        complete : function(resultat, statut){
-            $.ajax({
-                url: 'http://127.0.0.1:3000/api/installation/id/'+numDeInstallation, //on prépare l'envoi
-                type: 'GET',
-                dataType: 'json',
-                data: '', //on créer les parametres d'url
-                success: function(data) { //si réussite
 
-                    if (marqueur[0]){
-                        for( let i = 0; i < marqueur.length; i++  ){
-                            macarte.removeLayer(marqueur[i]);
+                $.ajax({
+                    url: 'http://127.0.0.1:3000/api/installation/id/'+numDeInstallation, //on prépare l'envoi
+                    type: 'GET',
+                    dataType: 'json',
+                    data: '', //on créer les parametres d'url
+                    success: function(data) { //si réussite
+
+                        if (marqueur[0]){
+                            for( let i = 0; i < marqueur.length; i++  ){
+                                macarte.removeLayer(marqueur[i]);
+                            }
+                            marqueur = [];
                         }
-                        marqueur = [];
-                    }
 
-                    coord = [];
-
-                    $.each(data, function(index, element) { //on parcourt tout les élements du tableau
-
-                        coord[index] = [2];
-
+                        coord = [];
+                        let tab = [];
                         $("#detailsInfos").empty();
                         $("#detailsInfos").append('<li class="leftLi"><b> Nom de l\'installation: </b>'+data.nomInstallation+'</li>');
                         $("#detailsInfos").append('<li class="leftLi"><b> Numéro de l\'installation: </b>'+data.numInstallation+'</li>');
@@ -529,18 +519,32 @@ function displayActivityInfos(received){
                         $("#detailsInfos").append('<li class="leftLi"><b> Accessible aux handicapés:</b> '+data.accessibleHandicapes+'</li>');
                         $("#detailsInfos").append('<li class="leftLi"><b> Nombre de place sur le parking: </b>'+data.nbplaceParking+'</li>');
                         $("#detailsInfos").append('<li class="leftLi"><b> Nombre de places pour handicapés sur le parking:</b> '+data.nbplaceParkingHandicapes+'</li>');
-                        coord[index][0] = data.locX;
-                        coord[index][1] = data.locY;
-                    });
+                        tab[0] = data.locX;
+                        tab[1] =data.locY;
+                        coord[0] = tab;
 
-                    for( let i = 0; i < coord.length; i++ ){
-                        marqueur.push(L.marker([coord[i][0], coord[i][1]]).bindPopup(nomInstallation[i]).addTo(macarte));
-                    }
+                        if (macarte == null) {
+                            initMap();
+                        }
 
-                },
-                error : function(resultat, statut, erreur){ console.log(erreur); },
-                complete : function(resultat, statut){}
-            });
+                        for( let i = 0; i < coord.length; i++ ){
+                            marqueur.push(L.marker([coord[i][0], coord[i][1]]).bindPopup(data.nomInstallation).addTo(macarte));
+                        }
+                        console.log('ici2'+data.nomInstallation);
+
+                        $("#detailsDiv").show(500);
+                        $("#googleMap").show(500);
+
+
+                    },
+                    error : function(resultat, statut, erreur){ console.log(erreur); },
+                    complete : function(resultat, statut){}
+                });
+
+        },
+        error : function(resultat, statut, erreur){ console.log(erreur); },
+        complete : function(resultat, statut){
+
         }
     });
 
