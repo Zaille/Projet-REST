@@ -9,7 +9,9 @@ let idInstallation;
 let numActivite = new Object();
 let numEquipement = new Object();
 let numDeInstallation;
+
 $(document).ready(function() {
+
     fillSelects();
 
     //ECOUTEUR POUR LE BOUTON DE RECHERCHE PAR LIEU
@@ -586,17 +588,17 @@ function displayActivityInfos(received){
                         tab[1] =data.locY;
                         coord[0] = tab;
 
-                       /* if (macarte == null) {
+                        if (macarte == null) {
                             initMap();
-                        }*/
+                        }
 
-                       /* for( let i = 0; i < coord.length; i++ ){
+                        for( let i = 0; i < coord.length; i++ ){
                             marqueur.push(L.marker([coord[i][0], coord[i][1]]).bindPopup(data.nomInstallation).addTo(macarte));
                         }
-                        console.log('ici2'+data.nomInstallation);*/
+                        console.log('ici2'+data.nomInstallation);
 
                         $("#detailsDiv").show(500);
-                      //  $("#googleMap").show(500);
+                        $("#googleMap").show(500);
 
 
                     },
