@@ -129,7 +129,21 @@ $(document).ready(function() {
                             dataType: 'json',
                             data: '',
                             success: function(data) { //si réussite
-                                $("#rightList").append('<li class="rightLi" id="ListEquipements" style="cursor: pointer" value="'+data.numInstallation +' "><a  href="#"  onclick="displayActivityInfos(this)" style="text-decoration: none; font-size: 20px; color:#404040fa" > ' +data.equipement+'</li>');
+                                $.ajax({
+                                    url: 'http://127.0.0.1:3000/api/installation/id/' + data.numInstallation, //on prépare l'envoi
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    data: '', //on créer les parametres d'url
+                                    success: function (element) { //si réussite
+                                        $("#rightList").append('<li class="rightLi" id="ListEquipements" style="cursor: pointer" value="'+data.numInstallation +' "><a  href="#"  onclick="displayActivityInfos(this)" style="text-decoration: none; font-size: 20px; color:#404040fa" > <b>'+data.equipement+' : </b>'+element.nomDepartement+ ',' +element.nomCommune+'</li>');
+
+                                    },
+                                    error: function (resultat, statut, erreur) {
+                                        console.log(erreur);
+                                    },
+                                    complete: function (resultat, statut) {
+                                    }
+                                });
                             },
                             error : function(resultat, statut, erreur){ console.log(erreur); },
                             complete : function(resultat, statut){}
